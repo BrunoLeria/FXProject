@@ -1,0 +1,28 @@
+git remote add origin git@github.com:BrunoLeria/FXProject.git
+
+
+a1820397@pg-lab3-wx16 MINGW64 ~/Meus Documentos/NetBeansProjects/JavaFX (master)
+$ git remote add origin git@github.com:BrunoLeria/FXProject.git
+
+a1820397@pg-lab3-wx16 MINGW64 ~/Meus Documentos/NetBeansProjects/JavaFX (master)
+$ git push
+fatal: The current branch master has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin master
+
+
+a1820397@pg-lab3-wx16 MINGW64 ~/Meus Documentos/NetBeansProjects/JavaFX (master)
+$ ^C
+
+a1820397@pg-lab3-wx16 MINGW64 ~/Meus Documentos/NetBeansProjects/JavaFX (master)
+$ git push --set-upstream origin master
+ssh: connect to host github.com port 22: Connection timed out
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+a1820397@pg-lab3-wx16 MINGW64 ~/Meus Documentos/NetBeansProjects/JavaFX (master)
+$ ssh -T git@github.com
+ssh: connect to host github.com port 22: Connection timed out
