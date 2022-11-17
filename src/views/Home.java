@@ -1,10 +1,11 @@
-package screens;
+package views;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMain.java to edit this template
  */
 
+import database.CriarBanco;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,6 +22,14 @@ public class Home extends Application {
     
     @Override
     public void start(Stage primaryStage) {
+        
+        CriarBanco app = new CriarBanco();
+        try {
+            app.criarBanco();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        
         Button btn = new Button();
         btn.setText("Say 'Hello World'");
         btn.setOnAction(new EventHandler<ActionEvent>() {

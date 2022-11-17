@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fluxo;
+package database;
 
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -20,7 +21,7 @@ public abstract class ModeloDAO<To, Tj> {
         emf = Persistence.createEntityManagerFactory("Loo2022-1PU");
     }
 
-    public abstract void inserir(To objeto)throws Exception;
+    public abstract void inserir(To objeto) throws Exception;
 //        objetoJPA.create(objeto);
 
     public abstract void editar(To objeto) throws Exception;
@@ -36,7 +37,6 @@ public abstract class ModeloDAO<To, Tj> {
 //        } catch (NonexistentEntityException ex) {
 //            throw new Exception("Não existe esta venda no banco: " + id);
 //        }
-//    }
 
     public abstract void excluir(To objeto) throws Exception;
 //        try {
@@ -44,9 +44,12 @@ public abstract class ModeloDAO<To, Tj> {
 //        } catch (NonexistentEntityException ex) {
 //            throw new Exception("Não existe esta venda no banco: " + objeto);
 //        }
-//    }
 
     public abstract To consultar(Integer id) throws Exception;
+//        return objetoJPA.findFluxocaixa(id);
+
+    public abstract List<To> consultarTodas() throws Exception;
+//        return objetoJPA.findFluxocaixaEntities();
 
     /**
      * @return the emf

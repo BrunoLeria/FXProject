@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package fluxo;
+package database;
 
 import java.sql.*;
 /**
@@ -45,19 +45,6 @@ public class CriarBanco {
             sessao.executeUpdate(sql);
         } catch (SQLException e) {
             throw new Exception("Erro na criação do banco - " + sql);
-        }
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        //Criar o banco
-        CriarBanco app = new CriarBanco();
-        try {
-            app.criarBanco();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
         }
     }
 

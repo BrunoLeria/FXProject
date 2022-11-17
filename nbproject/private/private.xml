@@ -3,12 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/classes/SubCategorias.java</file>
-            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/fluxo/ModeloDAO.java</file>
-            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/fluxo/CriarBanco.java</file>
-            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/classes/FluxoCaixa.java</file>
-            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/classes/CategoriasContas.java</file>
-            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/classes/Pagamento.java</file>
+            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/screens/Home.java</file>
+            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/models/Subcategorias.java</file>
+            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/controllers/CategoriascontasJpaController.java</file>
+            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/controllers/SubcategoriasJpaController.java</file>
+            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/database/CriarBanco.java</file>
+            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/models/ModeloDAO.java</file>
+            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/models/Pagamento.java</file>
+            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/models/Fluxocaixa.java</file>
+            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/models/Categoriascontas.java</file>
+            <file>file:/C:/Users/Bruno/Documents/NetBeansProjects/fluxo/src/controllers/FluxocaixaJpaController.java</file>
         </group>
     </open-files>
 </project-private>
