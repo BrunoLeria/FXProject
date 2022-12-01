@@ -13,7 +13,7 @@ import javafx.fxml.Initializable;
  *
  * @author Bruno
  */
-public class SCtcFormController implements Initializable {
+public class CtcFormController implements Initializable {
 
     /**
      * Initializes the controller class.
