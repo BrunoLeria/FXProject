@@ -7,7 +7,6 @@ package models;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,7 +22,7 @@ import javax.persistence.Table;
  * @author Bruno
  */
 @Entity
-@Table(name = "subcategorias", catalog = "db_fluxo", schema = "")
+@Table(name = "subcategorias")
 @NamedQueries({
     @NamedQuery(name = "Subcategorias.findAll", query = "SELECT s FROM Subcategorias s"),
     @NamedQuery(name = "Subcategorias.findBySbcCodigo", query = "SELECT s FROM Subcategorias s WHERE s.sbcCodigo = :sbcCodigo"),
@@ -37,11 +36,11 @@ public class Subcategorias implements Serializable {
     private Integer sbcCodigo;
     @Basic(optional = false)
     @Column(name = "sbc_descricao")
-    private int sbcDescricao;
+    private String sbcDescricao;
     @JoinColumn(name = "sbc_fk_ctc_codigo", referencedColumnName = "ctc_codigo")
     @ManyToOne(optional = false)
     private Categoriascontas sbcFkCtcCodigo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "flcFkSbcCodigo")
+    @OneToMany(mappedBy = "flcFkSbcCodigo")
     private Collection<Fluxocaixa> fluxocaixaCollection;
 
     public Subcategorias() {
@@ -51,9 +50,10 @@ public class Subcategorias implements Serializable {
         this.sbcCodigo = sbcCodigo;
     }
 
-    public Subcategorias(Integer sbcCodigo, int sbcDescricao) {
+    public Subcategorias(Integer sbcCodigo, String sbcDescricao, Categoriascontas sbcFkCtcCodigo) {
         this.sbcCodigo = sbcCodigo;
         this.sbcDescricao = sbcDescricao;
+        this.sbcFkCtcCodigo = sbcFkCtcCodigo;
     }
 
     public Integer getSbcCodigo() {
@@ -64,11 +64,11 @@ public class Subcategorias implements Serializable {
         this.sbcCodigo = sbcCodigo;
     }
 
-    public int getSbcDescricao() {
+    public String getSbcDescricao() {
         return sbcDescricao;
     }
 
-    public void setSbcDescricao(int sbcDescricao) {
+    public void setSbcDescricao(String sbcDescricao) {
         this.sbcDescricao = sbcDescricao;
     }
 
@@ -110,7 +110,7 @@ public class Subcategorias implements Serializable {
 
     @Override
     public String toString() {
-        return "controllers.Subcategorias[ sbcCodigo=" + sbcCodigo + " ]";
+        return "models.Subcategorias[ sbcCodigo=" + sbcCodigo + " ]";
     }
     
 }

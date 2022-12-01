@@ -4,9 +4,6 @@
  */
 package controllers;
 
-import models.Categoriascontas;
-import models.Fluxocaixa;
-import models.Subcategorias;
 import controllers.exceptions.NonexistentEntityException;
 import controllers.exceptions.PreexistingEntityException;
 import java.io.Serializable;
@@ -17,6 +14,9 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import models.Categoriascontas;
+import models.Fluxocaixa;
+import models.Subcategorias;
 
 /**
  *

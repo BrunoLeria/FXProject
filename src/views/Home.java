@@ -4,14 +4,12 @@ package views;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMain.java to edit this template
  */
-
 import database.CriarBanco;
+import java.io.IOException;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -19,35 +17,25 @@ import javafx.stage.Stage;
  * @author Bruno
  */
 public class Home extends Application {
-    
+
     @Override
-    public void start(Stage primaryStage) {
-        
+    public void start(Stage stage) {
+
         CriarBanco app = new CriarBanco();
         try {
             app.criarBanco();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeScreen.fxml"));
+            Parent mainWindow = loader.load();
+            Scene mainScene = new Scene(mainWindow);
+            stage.setScene(mainScene);
+            stage.show();
+        } catch (IOException ex) {
+            System.out.println(ex);
+            new ExceptionDisplay("Erro ao iniciar a cena:" + ex.getMessage());
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            System.out.println(ex);
+            new ExceptionDisplay("Erro ao iniciar o banco:" + ex.getMessage());
         }
-        
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     /**
@@ -56,5 +44,5 @@ public class Home extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

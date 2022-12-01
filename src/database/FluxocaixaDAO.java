@@ -7,6 +7,8 @@ package database;
 import controllers.FluxocaixaJpaController;
 import controllers.exceptions.NonexistentEntityException;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import models.Fluxocaixa;
 
 /**
@@ -15,6 +17,14 @@ import models.Fluxocaixa;
  */
 public class FluxocaixaDAO extends ModeloDAO<Fluxocaixa, FluxocaixaJpaController> {
 
+    EntityManagerFactory emf;
+    FluxocaixaJpaController objetoJPA;
+
+    public FluxocaixaDAO() {
+        emf = Persistence.createEntityManagerFactory("fluxoPU");
+        objetoJPA = new FluxocaixaJpaController(emf);
+    }
+
     @Override
     public void inserir(Fluxocaixa objeto) throws Exception {
         objetoJPA.create(objeto);
@@ -22,7 +32,7 @@ public class FluxocaixaDAO extends ModeloDAO<Fluxocaixa, FluxocaixaJpaController
 
     @Override
     public void editar(Fluxocaixa objeto) throws Exception {
-                try {
+        try {
             objetoJPA.edit(objeto);
         } catch (NonexistentEntityException ex) {
             throw new Exception("Não existe esta venda no banco: " + objeto);
@@ -40,7 +50,7 @@ public class FluxocaixaDAO extends ModeloDAO<Fluxocaixa, FluxocaixaJpaController
 
     @Override
     public void excluir(Fluxocaixa objeto) throws Exception {
-                try {
+        try {
             objetoJPA.destroy(objeto.getFlcCodigo());
         } catch (NonexistentEntityException ex) {
             throw new Exception("Não existe esta venda no banco: " + objeto);
@@ -56,5 +66,5 @@ public class FluxocaixaDAO extends ModeloDAO<Fluxocaixa, FluxocaixaJpaController
     public List<Fluxocaixa> consultarTodas() throws Exception {
         return objetoJPA.findFluxocaixaEntities();
     }
-    
+
 }

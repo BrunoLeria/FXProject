@@ -19,9 +19,9 @@ public class CriarBanco {
 
     public CriarBanco() {
         this.driver = "com.mysql.cj.jdbc.Driver";
-        this.database = "loo2022";
+        this.database = "db_fluxo";
         this.user = "root";
-        this.senha = "root";
+        this.senha = "";
     }
 
     public CriarBanco(String driver, String database, String user, String senha) {
@@ -38,13 +38,6 @@ public class CriarBanco {
             conexao = DriverManager.getConnection(url, user, senha);
         } catch (SQLException ex) {
             throw new Exception("driver incorreto - " + driver);
-        }
-        String sql = "create database " + database;
-        try {
-            Statement sessao = conexao.createStatement();
-            sessao.executeUpdate(sql);
-        } catch (SQLException e) {
-            throw new Exception("Erro na criação do banco - " + sql);
         }
     }
 

@@ -4,10 +4,6 @@
  */
 package controllers;
 
-import models.Categoriascontas;
-import models.Fluxocaixa;
-import models.Subcategorias;
-import controllers.exceptions.IllegalOrphanException;
 import controllers.exceptions.NonexistentEntityException;
 import controllers.exceptions.PreexistingEntityException;
 import java.io.Serializable;
@@ -15,11 +11,14 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import models.Categoriascontas;
+import models.Fluxocaixa;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import models.Subcategorias;
 
 /**
  *
@@ -82,7 +81,7 @@ public class SubcategoriasJpaController implements Serializable {
         }
     }
 
-    public void edit(Subcategorias subcategorias) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Subcategorias subcategorias) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -92,18 +91,6 @@ public class SubcategoriasJpaController implements Serializable {
             Categoriascontas sbcFkCtcCodigoNew = subcategorias.getSbcFkCtcCodigo();
             Collection<Fluxocaixa> fluxocaixaCollectionOld = persistentSubcategorias.getFluxocaixaCollection();
             Collection<Fluxocaixa> fluxocaixaCollectionNew = subcategorias.getFluxocaixaCollection();
-            List<String> illegalOrphanMessages = null;
-            for (Fluxocaixa fluxocaixaCollectionOldFluxocaixa : fluxocaixaCollectionOld) {
-                if (!fluxocaixaCollectionNew.contains(fluxocaixaCollectionOldFluxocaixa)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Fluxocaixa " + fluxocaixaCollectionOldFluxocaixa + " since its flcFkSbcCodigo field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
             if (sbcFkCtcCodigoNew != null) {
                 sbcFkCtcCodigoNew = em.getReference(sbcFkCtcCodigoNew.getClass(), sbcFkCtcCodigoNew.getCtcCodigo());
                 subcategorias.setSbcFkCtcCodigo(sbcFkCtcCodigoNew);
@@ -123,6 +110,12 @@ public class SubcategoriasJpaController implements Serializable {
             if (sbcFkCtcCodigoNew != null && !sbcFkCtcCodigoNew.equals(sbcFkCtcCodigoOld)) {
                 sbcFkCtcCodigoNew.getSubcategoriasCollection().add(subcategorias);
                 sbcFkCtcCodigoNew = em.merge(sbcFkCtcCodigoNew);
+            }
+            for (Fluxocaixa fluxocaixaCollectionOldFluxocaixa : fluxocaixaCollectionOld) {
+                if (!fluxocaixaCollectionNew.contains(fluxocaixaCollectionOldFluxocaixa)) {
+                    fluxocaixaCollectionOldFluxocaixa.setFlcFkSbcCodigo(null);
+                    fluxocaixaCollectionOldFluxocaixa = em.merge(fluxocaixaCollectionOldFluxocaixa);
+                }
             }
             for (Fluxocaixa fluxocaixaCollectionNewFluxocaixa : fluxocaixaCollectionNew) {
                 if (!fluxocaixaCollectionOld.contains(fluxocaixaCollectionNewFluxocaixa)) {
@@ -152,7 +145,7 @@ public class SubcategoriasJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -164,21 +157,15 @@ public class SubcategoriasJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The subcategorias with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            Collection<Fluxocaixa> fluxocaixaCollectionOrphanCheck = subcategorias.getFluxocaixaCollection();
-            for (Fluxocaixa fluxocaixaCollectionOrphanCheckFluxocaixa : fluxocaixaCollectionOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Subcategorias (" + subcategorias + ") cannot be destroyed since the Fluxocaixa " + fluxocaixaCollectionOrphanCheckFluxocaixa + " in its fluxocaixaCollection field has a non-nullable flcFkSbcCodigo field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
             Categoriascontas sbcFkCtcCodigo = subcategorias.getSbcFkCtcCodigo();
             if (sbcFkCtcCodigo != null) {
                 sbcFkCtcCodigo.getSubcategoriasCollection().remove(subcategorias);
                 sbcFkCtcCodigo = em.merge(sbcFkCtcCodigo);
+            }
+            Collection<Fluxocaixa> fluxocaixaCollection = subcategorias.getFluxocaixaCollection();
+            for (Fluxocaixa fluxocaixaCollectionFluxocaixa : fluxocaixaCollection) {
+                fluxocaixaCollectionFluxocaixa.setFlcFkSbcCodigo(null);
+                fluxocaixaCollectionFluxocaixa = em.merge(fluxocaixaCollectionFluxocaixa);
             }
             em.remove(subcategorias);
             em.getTransaction().commit();

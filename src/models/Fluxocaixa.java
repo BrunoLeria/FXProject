@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
  * @author Bruno
  */
 @Entity
-@Table(name = "fluxocaixa", catalog = "db_fluxo", schema = "")
+@Table(name = "fluxocaixa")
 @NamedQueries({
     @NamedQuery(name = "Fluxocaixa.findAll", query = "SELECT f FROM Fluxocaixa f"),
     @NamedQuery(name = "Fluxocaixa.findByFlcCodigo", query = "SELECT f FROM Fluxocaixa f WHERE f.flcCodigo = :flcCodigo"),
@@ -55,7 +55,7 @@ public class Fluxocaixa implements Serializable {
     @ManyToOne(optional = false)
     private Categoriascontas flcFkCtcCodigo;
     @JoinColumn(name = "flc_fk_sbc_codigo", referencedColumnName = "sbc_codigo")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Subcategorias flcFkSbcCodigo;
 
     public Fluxocaixa() {
@@ -151,7 +151,7 @@ public class Fluxocaixa implements Serializable {
 
     @Override
     public String toString() {
-        return "controllers.Fluxocaixa[ flcCodigo=" + flcCodigo + " ]";
+        return "models.Fluxocaixa[ flcCodigo=" + flcCodigo + " ]";
     }
     
 }

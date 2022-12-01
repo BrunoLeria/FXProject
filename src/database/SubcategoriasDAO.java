@@ -7,6 +7,8 @@ package database;
 import controllers.SubcategoriasJpaController;
 import controllers.exceptions.NonexistentEntityException;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import models.Subcategorias;
 
 /**
@@ -14,6 +16,14 @@ import models.Subcategorias;
  * @author Bruno
  */
 public class SubcategoriasDAO extends ModeloDAO<Subcategorias, SubcategoriasJpaController> {
+
+    EntityManagerFactory emf;
+    SubcategoriasJpaController objetoJPA;
+
+    public SubcategoriasDAO() {
+        emf = Persistence.createEntityManagerFactory("fluxoPU");
+        objetoJPA = new SubcategoriasJpaController(emf);
+    }
 
     @Override
     public void inserir(Subcategorias objeto) throws Exception {

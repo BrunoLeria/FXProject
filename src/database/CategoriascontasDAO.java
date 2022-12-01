@@ -3,12 +3,22 @@ package database;
 import controllers.CategoriascontasJpaController;
 import controllers.exceptions.NonexistentEntityException;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import models.Categoriascontas;
 
 /**
  * CategoriasContas
  */
 public class CategoriascontasDAO extends ModeloDAO<Categoriascontas, CategoriascontasJpaController> {
+
+    EntityManagerFactory emf;
+    CategoriascontasJpaController objetoJPA;
+
+    public CategoriascontasDAO() {
+        emf = Persistence.createEntityManagerFactory("fluxoPU");
+        objetoJPA = new CategoriascontasJpaController(emf);
+    }
 
     @Override
     public void inserir(Categoriascontas objeto) throws Exception {
@@ -26,7 +36,7 @@ public class CategoriascontasDAO extends ModeloDAO<Categoriascontas, Categoriasc
 
     @Override
     public void excluir(Integer id) throws Exception {
-                try {
+        try {
             objetoJPA.destroy(id);
         } catch (NonexistentEntityException ex) {
             throw new Exception("Não existe esta venda no banco: " + id);
@@ -35,7 +45,7 @@ public class CategoriascontasDAO extends ModeloDAO<Categoriascontas, Categoriasc
 
     @Override
     public void excluir(Categoriascontas objeto) throws Exception {
-                try {
+        try {
             objetoJPA.destroy(objeto.getCtcCodigo());
         } catch (NonexistentEntityException ex) {
             throw new Exception("Não existe esta venda no banco: " + objeto);
@@ -49,8 +59,8 @@ public class CategoriascontasDAO extends ModeloDAO<Categoriascontas, Categoriasc
 
     @Override
     public List<Categoriascontas> consultarTodas() throws Exception {
-             return objetoJPA.findCategoriascontasEntities();
+        return objetoJPA.findCategoriascontasEntities();
 
     }
-    
+
 }

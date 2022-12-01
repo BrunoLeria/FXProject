@@ -1,14 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screens.HomeScreenController">
-    <stylesheets>
-        <URL value="@homescreen.css"/>
-    </stylesheets>
-</AnchorPane>
+
+<BorderPane fx:id="root" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.HomeScreenController">
+   <center>
+      <AnchorPane id="AnchorPane" prefHeight="683.0" prefWidth="991.0" styleClass="mainFxmlClass">
+         <children>
+            <Button fx:id="btnAddFluxo" layoutX="61.0" layoutY="387.0" mnemonicParsing="false" onAction="#addFluxo" prefHeight="57.0" prefWidth="68.0">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../icons/add_circle_FILL0_wght400_GRAD0_opsz48.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnCategorias" layoutX="61.0" layoutY="48.0" mnemonicParsing="false" onAction="#openCat" prefHeight="84.0" prefWidth="160.0" text="Categorias/Sub" textAlignment="JUSTIFY" textOverrun="CLIP">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnDeleteFluxo" layoutX="61.0" layoutY="453.0" mnemonicParsing="false" onAction="#deleteFluxo" prefHeight="57.0" prefWidth="68.0">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../icons/cancel_FILL0_wght400_GRAD0_opsz48.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnEditFluxo" layoutX="61.0" layoutY="517.0" mnemonicParsing="false" onAction="#editFluxo" prefHeight="57.0" prefWidth="68.0">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../icons/edit_FILL0_wght400_GRAD0_opsz48.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnExit" layoutX="61.0" layoutY="585.0" mnemonicParsing="false" onAction="#exit" prefHeight="57.0" prefWidth="68.0">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../icons/logout_FILL0_wght400_GRAD0_opsz48.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <TableView fx:id="tableFluxo" layoutX="246.0" layoutY="48.0" prefHeight="619.0" prefWidth="724.0">
+              <columns>
+                <TableColumn fx:id="flcCodigo" prefWidth="75.0" text="Código" />
+                <TableColumn fx:id="flcDescricao" prefWidth="140.0" text="Descrição" />
+                  <TableColumn fx:id="flcDataOcorrencia" minWidth="3.0" prefWidth="71.0" text="Data" />
+                  <TableColumn fx:id="flcValor" minWidth="0.0" prefWidth="66.0" text="Valor" />
+                  <TableColumn fx:id="flcFormaPagamento" prefWidth="140.0" text="Forma de Pagamento" />
+                  <TableColumn fx:id="flcCategoria" minWidth="0.0" prefWidth="102.0" text="Categoria" />
+                  <TableColumn fx:id="flcSubCategoria" prefWidth="127.0" text="Sub-categoria" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

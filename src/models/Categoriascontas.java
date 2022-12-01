@@ -21,7 +21,7 @@ import javax.persistence.Table;
  * @author Bruno
  */
 @Entity
-@Table(name = "categoriascontas", catalog = "db_fluxo", schema = "")
+@Table(name = "categoriascontas")
 @NamedQueries({
     @NamedQuery(name = "Categoriascontas.findAll", query = "SELECT c FROM Categoriascontas c"),
     @NamedQuery(name = "Categoriascontas.findByCtcCodigo", query = "SELECT c FROM Categoriascontas c WHERE c.ctcCodigo = :ctcCodigo"),
@@ -120,7 +120,7 @@ public class Categoriascontas implements Serializable {
 
     @Override
     public String toString() {
-        return "controllers.Categoriascontas[ ctcCodigo=" + ctcCodigo + " ]";
+        return "models.Categoriascontas[ ctcCodigo=" + ctcCodigo + " ]";
     }
     
 }

@@ -18,7 +18,7 @@ public abstract class ModeloDAO<To, Tj> {
     protected Tj objetoJPA;
 
     public ModeloDAO() {
-        emf = Persistence.createEntityManagerFactory("Loo2022-1PU");
+        emf = Persistence.createEntityManagerFactory("fluxoPU");
     }
 
     public abstract void inserir(To objeto) throws Exception;
