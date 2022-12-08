@@ -1,9 +1,11 @@
 package views;
 
+import components.ColumnFormatter;
 import database.FluxocaixaDAO;
 import exceptions.ExceptionDisplay;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
@@ -105,7 +107,8 @@ public class ReportScreenController {
         tc_flc_data_ocorrencia.setText("Data");
         tc_flc_data_ocorrencia.setPrefWidth(194.0);
         tc_flc_data_ocorrencia.setCellValueFactory(new PropertyValueFactory("flcDataOcorrencia"));
-
+        tc_flc_data_ocorrencia.setCellFactory(new ColumnFormatter<>(new SimpleDateFormat("dd/MM/YYYY")));
+        
         TableColumn<Fluxocaixa, String> tc_flc_descricao = new TableColumn<>();
         tc_flc_descricao.setText("Descrição");
         tc_flc_descricao.setPrefWidth(140.0);
@@ -151,6 +154,7 @@ public class ReportScreenController {
         tc_flc_data_ocorrencia_receive.setText("Data");
         tc_flc_data_ocorrencia_receive.setPrefWidth(194.0);
         tc_flc_data_ocorrencia_receive.setCellValueFactory(new PropertyValueFactory("flcDataOcorrencia"));
+        tc_flc_data_ocorrencia_receive.setCellFactory(new ColumnFormatter<>(new SimpleDateFormat("dd/MM/YYYY")));
 
         TableColumn<Fluxocaixa, String> tc_flc_descricao_receive = new TableColumn<>();
         tc_flc_descricao_receive.setText("Descrição");
@@ -197,6 +201,7 @@ public class ReportScreenController {
         tc_flc_data_ocorrencia_flow.setText("Data");
         tc_flc_data_ocorrencia_flow.setPrefWidth(194.0);
         tc_flc_data_ocorrencia_flow.setCellValueFactory(new PropertyValueFactory("flcDataOcorrencia"));
+        tc_flc_data_ocorrencia_flow.setCellFactory(new ColumnFormatter<>(new SimpleDateFormat("dd/MM/YYYY")));
 
         TableColumn<Fluxocaixa, String> tc_flc_descricao_flow = new TableColumn<>();
         tc_flc_descricao_flow.setText("Descrição");

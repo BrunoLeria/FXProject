@@ -1,5 +1,6 @@
 package views;
 
+import components.ColumnFormatter;
 import exceptions.ExceptionDisplay;
 import database.CategoriascontasDAO;
 import database.FluxocaixaDAO;
@@ -7,6 +8,7 @@ import database.SubcategoriasDAO;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -353,6 +355,7 @@ public class HomeScreenController {
         tc_flc_data_ocorrencia.setText("Data");
         tc_flc_data_ocorrencia.setPrefWidth(75.0);
         tc_flc_data_ocorrencia.setCellValueFactory(new PropertyValueFactory("flcDataOcorrencia"));
+        tc_flc_data_ocorrencia.setCellFactory(new ColumnFormatter<>(new SimpleDateFormat("dd/MM/YYYY")));
 
         TableColumn<Fluxocaixa, String> tc_flc_descricao = new TableColumn<>();
         tc_flc_descricao.setText("Descrição");
