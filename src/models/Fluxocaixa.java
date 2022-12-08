@@ -5,6 +5,7 @@
 package models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -45,9 +46,10 @@ public class Fluxocaixa implements Serializable {
     @Column(name = "flc_data_ocorrencia")
     @Temporal(TemporalType.DATE)
     private Date flcDataOcorrencia;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @Column(name = "flc_valor")
-    private long flcValor;
+    private BigDecimal flcValor;
     @Basic(optional = false)
     @Column(name = "flc_forma_pagamento")
     private int flcFormaPagamento;
@@ -65,13 +67,16 @@ public class Fluxocaixa implements Serializable {
         this.flcCodigo = flcCodigo;
     }
 
-    public Fluxocaixa(Integer flcCodigo, String flcDescricao, Date flcDataOcorrencia, long flcValor, int flcFormaPagamento) {
+    public Fluxocaixa(Integer flcCodigo, String flcDescricao, Date flcDataOcorrencia, BigDecimal flcValor, int flcFormaPagamento, Categoriascontas flcFkCtcCodigo, Subcategorias flcFkSbcCodigo) {
         this.flcCodigo = flcCodigo;
         this.flcDescricao = flcDescricao;
         this.flcDataOcorrencia = flcDataOcorrencia;
         this.flcValor = flcValor;
         this.flcFormaPagamento = flcFormaPagamento;
+        this.flcFkCtcCodigo = flcFkCtcCodigo;
+        this.flcFkSbcCodigo = flcFkSbcCodigo;
     }
+
 
     public Integer getFlcCodigo() {
         return flcCodigo;
@@ -97,11 +102,11 @@ public class Fluxocaixa implements Serializable {
         this.flcDataOcorrencia = flcDataOcorrencia;
     }
 
-    public long getFlcValor() {
+    public BigDecimal getFlcValor() {
         return flcValor;
     }
 
-    public void setFlcValor(long flcValor) {
+    public void setFlcValor(BigDecimal flcValor) {
         this.flcValor = flcValor;
     }
 

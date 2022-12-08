@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-
 <BorderPane fx:id="root" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.FcFormController">
    <center>
       <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass">
@@ -74,6 +73,8 @@
                       </ImageView>
                   </graphic>
               </Button>
+            <Label layoutX="175.0" layoutY="152.0" text="Forma de pagamento:" />
+            <ComboBox fx:id="cbFrmPag" layoutX="301.0" layoutY="148.0" prefWidth="150.0" />
           </children>
       </AnchorPane>
    </center>
