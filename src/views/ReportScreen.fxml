@@ -52,7 +52,7 @@
                     <graphic>
                         <ImageView>
                             <image>
-                                <Image url="@../icons/logout_FILL0_wght400_GRAD0_opsz48.png" />
+                                <Image url="@../icons/arrow_back_FILL0_wght400_GRAD0_opsz48.png" />
                             </image>
                         </ImageView>
                     </graphic>

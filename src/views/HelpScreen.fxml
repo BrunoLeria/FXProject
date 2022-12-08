@@ -25,10 +25,17 @@
                 <Label layoutX="304.0" layoutY="344.0" text="Mônica Hoeldtke Pietruchinski" />
                 <Label layoutX="179.0" layoutY="369.0" text="Para entrar em contato comigo:" />
                 <Label layoutX="352.0" layoutY="369.0" text="leria@alunos.utfpr.com.br" />
-                <Button fx:id="btnBack" accessibleText="Voltar para a página principal." layoutX="428.0" layoutY="535.0" mnemonicParsing="false" onAction="#exit" text="Voltar">
+                <Button fx:id="btnBack" accessibleText="Voltar para a página principal." layoutX="390.0" layoutY="533.0" mnemonicParsing="false" onAction="#exit" text="Voltar">
                     <tooltip>
                         <Tooltip text="Voltar para a página inicial." />
                     </tooltip>
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@../icons/arrow_back_FILL0_wght400_GRAD0_opsz48.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
                 </Button>
             </children>
         </AnchorPane>
