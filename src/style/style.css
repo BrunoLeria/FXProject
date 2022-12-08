@@ -5,3 +5,43 @@
 .mainFxmlClass {
 
 }
+
+.button{
+    -fx-background-color: #0096C9;
+    -fx-border-color: #0C617D;
+    -fx-border-width: 2;
+    -fx-text-fill: #FFFFFF;
+    -fx-wrap-text: true;
+    -fx-label-padding: 10;
+}
+
+.table-column{
+    -fx-background-color: #C9BE14;
+    -fx-border-color: #7D7506;
+    -fx-border-width: 2;
+}
+
+.menu-bar {
+    -fx-background-color: #C91443;
+}
+
+.tab{
+    -fx-background-color: #C91443;
+    -fx-prompt-text-fill:#FFFFFF;
+}
+
+.tab-label{
+    -fx-text-fill: #FFFFFF;
+}
+
+.combo-box{
+    -fx-border-color: #0C617D;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+}
+
+.text-field{
+    -fx-border-color: #0C617D;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+}
