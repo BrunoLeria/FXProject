@@ -16,7 +16,14 @@ public enum Pagamento {
     DEPOSITO,
     CONVENIO;
     
+    private String nome;
+    
     public int selecionarPagamento(){
         return ordinal() + 1;
+    }
+    
+    public String getNome() {
+        nome = this.toString();
+        return nome;
     }
 }

@@ -13,6 +13,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -185,7 +186,6 @@ public class HomeScreenController {
                 Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
                 Date date = Date.from(instant);
                 Fluxocaixa fc = new Fluxocaixa(index, tfDesFlc.getText(), date, BigDecimal.valueOf(Double.parseDouble(tfValFlc.getText())), cbFrmPag.getValue().selecionarPagamento(), categoriaEscolhida, subCategoriaEscolhida);
-                System.out.println(fc.toString());
                 if (isEdit()) {
                     fldao.editar(fc);
                 } else {
@@ -226,19 +226,17 @@ public class HomeScreenController {
 
     @FXML
     void openCat(ActionEvent event) {
-        root.getChildren().remove(menubar);
         loadUI("CtcTable.fxml");
     }
 
     @FXML
     void openHelp(ActionEvent event) {
-        root.getChildren().remove(menubar);
         loadUI("HelpScreen.fxml");
     }
 
     @FXML
     void openReport(ActionEvent event) {
-        root.getChildren().remove(menubar);
+        loadUI("ReportScreen.fxml");
     }
 
     @FXML
@@ -273,6 +271,10 @@ public class HomeScreenController {
         assert tfValFlc != null : "fx:id=\"tfValFlc\" was    not injected: check your FXML file 'HomeScreen.fxml'.";
 
         try {
+            btnEditFluxo.setDisable(true);
+            btnDeleteFluxo.setDisable(true);
+            miEditFluxo.setDisable(true);
+            miDeleteFluxo.setDisable(true);
             addListenerForTableFluxo();
             addListenerForComboBoxCategorias();
             updateLists();
@@ -298,6 +300,7 @@ public class HomeScreenController {
      */
     public void loadUI(String nomeArq) {
         try {
+            root.getChildren().remove(menubar);
             Pane novaTela = (Pane) new FXMLLoader().load(getClass().getResource(nomeArq));
             root.setCenter(novaTela);
         } catch (IOException ex) {
@@ -339,7 +342,7 @@ public class HomeScreenController {
         TableColumn<Fluxocaixa, String> tc_flc_categoria = new TableColumn<>();
         tc_flc_categoria.setText("Categoria");
         tc_flc_categoria.setPrefWidth(100.0);
-        tc_flc_categoria.setCellValueFactory(new PropertyValueFactory("flcFkCtcCodigo"));
+        tc_flc_categoria.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFlcFkCtcCodigo().getCtcDescricao()));
 
         TableColumn<Fluxocaixa, Integer> tc_flc_codigo = new TableColumn<>();
         tc_flc_codigo.setText("Código");
@@ -359,12 +362,12 @@ public class HomeScreenController {
         TableColumn<Fluxocaixa, String> tc_flc_forma_pagamento = new TableColumn<>();
         tc_flc_forma_pagamento.setText("Forma de Pagamento");
         tc_flc_forma_pagamento.setPrefWidth(136.0);
-        tc_flc_forma_pagamento.setCellValueFactory(new PropertyValueFactory("flcFormaPagamento"));
+        tc_flc_forma_pagamento.setCellValueFactory(cellData -> new SimpleStringProperty(Pagamento.values()[cellData.getValue().getFlcFormaPagamento()].getNome()));
 
         TableColumn<Fluxocaixa, String> tc_flc_sub_categoria = new TableColumn<>();
         tc_flc_sub_categoria.setText("Sub-categoria");
         tc_flc_sub_categoria.setPrefWidth(136.0);
-        tc_flc_sub_categoria.setCellValueFactory(new PropertyValueFactory("flcFkSbcCodigo"));
+        tc_flc_sub_categoria.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFlcFkSbcCodigo().getSbcDescricao()));
 
         TableColumn<Fluxocaixa, Double> tc_flc_valor = new TableColumn<>();
         tc_flc_valor.setText("Valor");

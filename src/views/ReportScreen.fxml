@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="root" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ReportScreenController">
+   <center>
+      <AnchorPane id="AnchorPane" prefHeight="683.0" prefWidth="892.0">
+         <children>
+            <TabPane layoutX="14.0" layoutY="14.0" prefHeight="471.0" prefWidth="863.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Contas a pagar">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="tableToPay" layoutX="14.0" layoutY="14.0" prefHeight="426.0" prefWidth="846.0" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Receitas recebidas">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="tableReceived" layoutX="14.0" layoutY="14.0" prefHeight="426.0" prefWidth="846.0" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Fluxo de caixa">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="tableFlow" layoutX="14.0" layoutY="14.0" prefHeight="426.0" prefWidth="846.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+            <Button fx:id="btnExit" layoutX="783.0" layoutY="575.0" mnemonicParsing="false" onAction="#exit" prefHeight="57.0" prefWidth="68.0">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@../icons/logout_FILL0_wght400_GRAD0_opsz48.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnUpdate" layoutX="684.0" layoutY="575.0" mnemonicParsing="false" onAction="#update" prefHeight="57.0" prefWidth="68.0">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@../icons/refresh_FILL0_wght400_GRAD0_opsz48.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

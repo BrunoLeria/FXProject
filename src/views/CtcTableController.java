@@ -12,6 +12,7 @@ import database.SubcategoriasDAO;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -86,10 +87,10 @@ public class CtcTableController {
 
     @FXML
     private CheckBox ckbPosCat;
-    
+
     @FXML
     private MenuBar menubar;
-    
+
     @FXML
     private MenuItem miAddCategoria;
 
@@ -257,13 +258,11 @@ public class CtcTableController {
 
     @FXML
     void exit(ActionEvent event) {
-        root.getChildren().remove(menubar);
         loadUI("HomeScreen.fxml");
     }
-    
+
     @FXML
     void openHelp(ActionEvent event) {
-        root.getChildren().remove(menubar);
         loadUI("HelpScreen.fxml");
     }
 
@@ -304,6 +303,14 @@ public class CtcTableController {
         assert tfDesSub != null : "fx:id=\"tfDesSub\" was not injected: check your FXML file 'CtcTable.fxml'.";
 
         try {
+            btnEditCategoria.setDisable(true);
+            btnEditSubCategoria.setDisable(true);
+            btnDeleteCategoria.setDisable(true);
+            btnDeleteSubCategoria.setDisable(true);
+            miEditCategoria.setDisable(true);
+            miEditSubCategoria.setDisable(true);
+            miDeleteCategoria.setDisable(true);
+            miDeleteSubCategoria.setDisable(true);
             addListenerForTableCategorias();
             addListenerForTableSubCategorias();
             updateTableCategorias();
@@ -319,6 +326,7 @@ public class CtcTableController {
 
     public void loadUI(String nomeArq) {
         try {
+            root.getChildren().remove(menubar);
             Pane novaTela = (Pane) new FXMLLoader().load(getClass().getResource(nomeArq));
             root.setCenter(novaTela);
         } catch (IOException ex) {
@@ -378,10 +386,10 @@ public class CtcTableController {
         tc_sbc_descricao.setPrefWidth(500.0);
         tc_sbc_descricao.setCellValueFactory(new PropertyValueFactory("sbcDescricao"));
 
-        TableColumn<Subcategorias, Categoriascontas> tc_sbc_fk_ctc_codigo = new TableColumn<>();
-        tc_sbc_fk_ctc_codigo.setText("Positiva");
+        TableColumn<Subcategorias, String> tc_sbc_fk_ctc_codigo = new TableColumn<>();
+        tc_sbc_fk_ctc_codigo.setText("Categoria");
         tc_sbc_fk_ctc_codigo.setPrefWidth(70.0);
-        tc_sbc_fk_ctc_codigo.setCellValueFactory(new PropertyValueFactory("sbcFkCtcCodigo"));
+        tc_sbc_fk_ctc_codigo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSbcFkCtcCodigo().getCtcDescricao()));
 
         tableSubCategoria.getColumns().addAll(tc_sbc_codigo, tc_sbc_descricao, tc_sbc_fk_ctc_codigo);
         tableSubCategoria.setItems(listaSubCategorias);
