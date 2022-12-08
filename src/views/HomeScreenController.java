@@ -150,12 +150,12 @@ public class HomeScreenController {
                 LocalDate localDate = dpDataFlc.getValue();
                 Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
                 Date date = Date.from(instant);
-                Fluxocaixa fc = new Fluxocaixa(index, tfDesFlc.getText(), date, BigDecimal.valueOf(Double.parseDouble(tfValFlc.getText())), index, cbCtcFlc.getValue(), cbSubCtc.getValue());
-                if (isEdit()) {
-                    fldao.editar(fc);
-                } else {
-                    fldao.inserir(fc);
-                }
+//                Fluxocaixa fc = new Fluxocaixa(index, tfDesFlc.getText(), date, BigDecimal.valueOf(Double.parseDouble(tfValFlc.getText())), index, cbCtcFlc.getValue(), cbSubCtc.getValue());
+//                if (isEdit()) {
+//                    fldao.editar(fc);
+//                } else {
+//                    fldao.inserir(fc);
+//                }
             } else {
                 new ExceptionDisplay("Erro ao salvar: Campos faltando.");
             }
