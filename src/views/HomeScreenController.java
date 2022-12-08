@@ -155,7 +155,7 @@ public class HomeScreenController {
                 new ExceptionDisplay("Por favor, adicione pelo menos uma categoria e uma sub-categoria antes de cadastrar um fluxo.");
             } else {
                 setEdit(false);
-                setupTextFieldsAndButtonsFlc(true);
+                setupTextFieldsAndButtonsFlc(false);
             }
         } catch (Exception ex) {
             new ExceptionDisplay("Erro ao consultar as categorias ou subcategorias: " + ex.getMessage());

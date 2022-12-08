@@ -151,13 +151,13 @@ public class CtcTableController {
     @FXML
     void addCategoria(ActionEvent event) {
         setEdit(false);
-        setupTextFieldsAndButtonsCtc(true);
+        setupTextFieldsAndButtonsCtc(false);
     }
 
     @FXML
     void addSubCategoria(ActionEvent event) {
         setEdit(false);
-        setupTextFieldsAndButtonsSub(true);
+        setupTextFieldsAndButtonsSub(false);
     }
 
     @FXML
