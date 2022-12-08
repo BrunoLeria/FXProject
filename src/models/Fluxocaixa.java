@@ -156,7 +156,8 @@ public class Fluxocaixa implements Serializable {
 
     @Override
     public String toString() {
-        return "models.Fluxocaixa[ flcCodigo=" + flcCodigo + " ]";
+        
+        return "models.Fluxocaixa[ flcCodigo=" + flcCodigo + ", flcDescricao=" + flcDescricao + ", flcDataOcorrencia=" + flcDataOcorrencia + ", flcValor=" + flcValor + ", flcFkCtcCodigo=" + flcFkCtcCodigo.toString() + ", flcFkSbcCodigo=" + flcFkSbcCodigo.toString() + ", flcFormaPagamento=" + flcFormaPagamento + "]";
     }
     
 }

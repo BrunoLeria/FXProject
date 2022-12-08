@@ -12,8 +12,6 @@ import database.SubcategoriasDAO;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -131,7 +129,7 @@ public class CtcTableController {
         if (tfDesCat.getText().isEmpty()) {
             new ExceptionDisplay("Erro ao salvar: Campos faltando.");
         } else {
-            int index = listaCategorias.isEmpty() ? 0 : (!tfCodCat.getText().isEmpty() ? Integer.parseInt(tfCodCat.getText()) : listaCategorias.toArray().length);
+            int index = listaCategorias.isEmpty() ? 1 : (!tfCodCat.getText().isEmpty() ? Integer.parseInt(tfCodCat.getText()) : listaCategorias.toArray().length + 1);
             Categoriascontas ct = new Categoriascontas(index, tfDesCat.getText(), ckbPosCat.isSelected());
             try {
                 if (isEdit()) {
@@ -157,7 +155,7 @@ public class CtcTableController {
         if (tfDesSub.getText().isEmpty() || cbCatSub.getSelectionModel() == null) {
             new ExceptionDisplay("Erro ao salvar: Campos faltando.");
         } else {
-            int index = listaSubCategorias.isEmpty() ? 0 : (!tfCodSub.getText().isEmpty() ? Integer.parseInt(tfCodSub.getText()) : listaSubCategorias.toArray().length);
+            int index = listaSubCategorias.isEmpty() ? 1 : (!tfCodSub.getText().isEmpty() ? Integer.parseInt(tfCodSub.getText()) : listaSubCategorias.toArray().length + 1);
             listaCategorias.forEach((categoria) -> {
                 if (categoria.getCtcDescricao().equals(cbCatSub.getValue())) {
                     categoriaEscolhida = categoria;

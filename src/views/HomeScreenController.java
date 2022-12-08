@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,10 +24,13 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javax.swing.JOptionPane;
 import models.Categoriascontas;
 import models.Fluxocaixa;
+import models.Pagamento;
 import models.Subcategorias;
 
 public class HomeScreenController {
@@ -35,8 +39,14 @@ public class HomeScreenController {
     private CategoriascontasDAO ccdao = new CategoriascontasDAO();
     private SubcategoriasDAO subdao = new SubcategoriasDAO();
     private FluxocaixaDAO fldao = new FluxocaixaDAO();
+    private ObservableList<Fluxocaixa> listaFluxos;
     private ObservableList<Categoriascontas> listaCategorias;
     private ObservableList<Subcategorias> listaSubCategorias;
+    private ObservableList<Pagamento> listaPagamento;
+    private ObservableList<String> listaCategoriasDesc;
+    private ObservableList<String> listaSubCategoriasDesc;
+    private Categoriascontas categoriaEscolhida;
+    private Subcategorias subCategoriaEscolhida;
     private boolean edit;
 
     @FXML
@@ -73,43 +83,22 @@ public class HomeScreenController {
     private Button btnSalvar;
 
     @FXML
-    private ComboBox<?> cbCtcFlc;
+    private ComboBox<String> cbCtcFlc;
 
     @FXML
-    private ComboBox<?> cbFrmPag;
+    private ComboBox<Pagamento> cbFrmPag;
 
     @FXML
-    private ComboBox<?> cbSubCtc;
+    private ComboBox<String> cbSubCtc;
 
     @FXML
     private DatePicker dpDataFlc;
 
     @FXML
-    private TableColumn<?, ?> flcCategoria;
-
-    @FXML
-    private TableColumn<?, ?> flcCodigo;
-
-    @FXML
-    private TableColumn<?, ?> flcDataOcorrencia;
-
-    @FXML
-    private TableColumn<?, ?> flcDescricao;
-
-    @FXML
-    private TableColumn<?, ?> flcFormaPagamento;
-
-    @FXML
-    private TableColumn<?, ?> flcSubCategoria;
-
-    @FXML
-    private TableColumn<?, ?> flcValor;
-
-    @FXML
     private BorderPane root;
 
     @FXML
-    private TableView<?> tableFluxo;
+    private TableView<Fluxocaixa> tableFluxo;
 
     @FXML
     private TextField tfCodFlc;
@@ -130,7 +119,8 @@ public class HomeScreenController {
             if (listaCategorias.isEmpty() || listaSubCategorias.isEmpty()) {
                 new ExceptionDisplay("Por favor, adicione pelo menos uma categoria e uma sub-categoria antes de cadastrar um fluxo.");
             } else {
-                loadUI("FcForm.fxml");
+                setEdit(false);
+                setupTextFieldsAndButtonsFlc(false);
             }
         } catch (Exception ex) {
             new ExceptionDisplay("Erro ao consultar as categorias ou subcategorias: " + ex.getMessage());
@@ -139,23 +129,37 @@ public class HomeScreenController {
 
     @FXML
     void btnCancelar(ActionEvent event) {
-
+        setEdit(false);
+        setupTextFieldsAndButtonsFlc(true);
     }
 
     @FXML
     void btnSalvar(ActionEvent event) {
         try {
             if (!tfDesFlc.getText().isEmpty() && !tfValFlc.getText().isEmpty() && !dpDataFlc.getValue().toString().isEmpty() && cbCtcFlc.getValue() != null) {
-                int index = tfCodFlc.getText().isEmpty() ? 0 : Integer.parseInt(tfCodFlc.getText());
+                int index = listaFluxos.isEmpty() ? 1 : (!tfCodFlc.getText().isEmpty() ? Integer.parseInt(tfCodFlc.getText()) : listaFluxos.toArray().length + 1);
+                listaCategorias.forEach((categoria) -> {
+                    if (categoria.getCtcDescricao().equals(cbCtcFlc.getValue())) {
+                        categoriaEscolhida = categoria;
+                    }
+                });
+
+                listaSubCategorias.forEach((subCategoria) -> {
+                    if (subCategoria.getSbcDescricao().equals(cbSubCtc.getValue())) {
+                        subCategoriaEscolhida = subCategoria;
+                    }
+                });
                 LocalDate localDate = dpDataFlc.getValue();
                 Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
                 Date date = Date.from(instant);
-//                Fluxocaixa fc = new Fluxocaixa(index, tfDesFlc.getText(), date, BigDecimal.valueOf(Double.parseDouble(tfValFlc.getText())), index, cbCtcFlc.getValue(), cbSubCtc.getValue());
-//                if (isEdit()) {
-//                    fldao.editar(fc);
-//                } else {
-//                    fldao.inserir(fc);
-//                }
+                Fluxocaixa fc = new Fluxocaixa(index, tfDesFlc.getText(), date, BigDecimal.valueOf(Double.parseDouble(tfValFlc.getText())), cbFrmPag.getValue().selecionarPagamento(), categoriaEscolhida, subCategoriaEscolhida);
+                System.out.println(fc.toString());
+                if (isEdit()) {
+                    fldao.editar(fc);
+                } else {
+                    fldao.inserir(fc);
+                }
+                loadUI("HomeScreen.fxml");
             } else {
                 new ExceptionDisplay("Erro ao salvar: Campos faltando.");
             }
@@ -166,12 +170,21 @@ public class HomeScreenController {
 
     @FXML
     void deleteFluxo(ActionEvent event) {
+        if (JOptionPane.showConfirmDialog(null, "Você tem certeza que quer deletar essa fluxo de caixa?", "Você tem certeza?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            try {
+                fldao.excluir(Integer.parseInt(tfCodFlc.getText()));
+                loadUI("HomeScreen.fxml");
+            } catch (Exception ex) {
+                new ExceptionDisplay("Erro ao deletar a categoria:" + ex.getMessage());
+            }
 
+        }
     }
 
     @FXML
     void editFluxo(ActionEvent event) {
-
+        setEdit(true);
+        setupTextFieldsAndButtonsFlc(false);
     }
 
     @FXML
@@ -209,19 +222,29 @@ public class HomeScreenController {
         assert cbFrmPag != null : "fx:id=\"cbFrmPag\" was not injected: check your FXML file 'HomeScreen.fxml'.";
         assert cbSubCtc != null : "fx:id=\"cbSubCtc\" was not injected: check your FXML file 'HomeScreen.fxml'.";
         assert dpDataFlc != null : "fx:id=\"dpDataFlc\" was not injected: check your FXML file 'HomeScreen.fxml'.";
-        assert flcCategoria != null : "fx:id=\"flcCategoria\" was not injected: check your FXML file 'HomeScreen.fxml'.";
-        assert flcCodigo != null : "fx:id=\"flcCodigo\" was not injected: check your FXML file 'HomeScreen.fxml'.";
-        assert flcDataOcorrencia != null : "fx:id=\"flcDataOcorrencia\" was not injected: check your FXML file 'HomeScreen.fxml'.";
-        assert flcDescricao != null : "fx:id=\"flcDescricao\" was not injected: check your FXML file 'HomeScreen.fxml'.";
-        assert flcFormaPagamento != null : "fx:id=\"flcFormaPagamento\" was not injected: check your FXML file 'HomeScreen.fxml'.";
-        assert flcSubCategoria != null : "fx:id=\"flcSubCategoria\" was not injected: check your FXML file 'HomeScreen.fxml'.";
-        assert flcValor != null : "fx:id=\"flcValor\" was not injected: check your FXML file 'HomeScreen.fxml'.";
         assert root != null : "fx:id=\"root\" was not injected: check your FXML file 'HomeScreen.fxml'.";
         assert tableFluxo != null : "fx:id=\"tableFluxo\" was not injected: check your FXML file 'HomeScreen.fxml'.";
         assert tfCodFlc != null : "fx:id=\"tfCodFlc\" was not injected: check your FXML file 'HomeScreen.fxml'.";
         assert tfDesFlc != null : "fx:id=\"tfDesFlc\" was not injected: check your FXML file 'HomeScreen.fxml'.";
         assert tfValFlc != null : "fx:id=\"tfValFlc\" was not injected: check your FXML file 'HomeScreen.fxml'.";
 
+        try {
+            addListenerForTableFluxo();
+            addListenerForComboBoxCategorias();
+            updateLists();
+            setupTableFluxo();
+            setupTextFieldsAndButtonsFlc(true);
+        } catch (Exception ex) {
+            new ExceptionDisplay("Erro ao montar a lista de fluxo de caixa:" + ex.getMessage());
+        }
+    }
+
+    public boolean isEdit() {
+        return edit;
+    }
+
+    public void setEdit(boolean edit) {
+        this.edit = edit;
     }
 
     /**
@@ -238,24 +261,169 @@ public class HomeScreenController {
         }
     }
 
-//     @FXML
-//    private TableColumn<Fluxocaixa, String> flcCategoria;
-//
-//    @FXML
-//    private TableColumn<Fluxocaixa, Integer> flcCodigo;
-//
-//    @FXML
-//    private TableColumn<Fluxocaixa, Date> flcDataOcorrencia;
-//
-//    @FXML
-//    private TableColumn<Fluxocaixa, String> flcDescricao;
-//
-//    @FXML
-//    private TableColumn<Fluxocaixa, String> flcFormaPagamento;
-//
-//    @FXML
-//    private TableColumn<Fluxocaixa, String> flcSubCategoria;
-//
-//    @FXML
-//    private TableColumn<Fluxocaixa, Double> flcValor;
+    private void updateLists() throws Exception {
+        if (listaFluxos != null) {
+            listaFluxos.clear();
+        }
+        listaFluxos = FXCollections.observableArrayList(
+                fldao.consultarTodas());
+
+        if (listaCategorias != null) {
+            listaCategorias.clear();
+        }
+        listaCategorias = FXCollections.observableArrayList(
+                ccdao.consultarTodas());
+        listaCategoriasDesc = FXCollections.observableArrayList();
+        listaCategorias.forEach((categoria) -> {
+            listaCategoriasDesc.add(categoria.getCtcDescricao());
+        });
+
+        if (listaSubCategorias != null) {
+            listaSubCategorias.clear();
+        }
+        listaSubCategorias = FXCollections.observableArrayList(
+                subdao.consultarTodas());
+        listaSubCategoriasDesc = FXCollections.observableArrayList();
+
+        if (listaPagamento != null) {
+            listaPagamento.clear();
+        }
+        listaPagamento = FXCollections.observableArrayList(Pagamento.values());
+    }
+
+    private void setupTableFluxo() throws Exception {
+        TableColumn<Fluxocaixa, String> tc_flc_categoria = new TableColumn<>();
+        tc_flc_categoria.setText("Categoria");
+        tc_flc_categoria.setPrefWidth(100.0);
+        tc_flc_categoria.setCellValueFactory(new PropertyValueFactory("flcFkCtcCodigo"));
+
+        TableColumn<Fluxocaixa, Integer> tc_flc_codigo = new TableColumn<>();
+        tc_flc_codigo.setText("Código");
+        tc_flc_codigo.setPrefWidth(75.0);
+        tc_flc_codigo.setCellValueFactory(new PropertyValueFactory("flcCodigo"));
+
+        TableColumn<Fluxocaixa, Date> tc_flc_data_ocorrencia = new TableColumn<>();
+        tc_flc_data_ocorrencia.setText("Data");
+        tc_flc_data_ocorrencia.setPrefWidth(75.0);
+        tc_flc_data_ocorrencia.setCellValueFactory(new PropertyValueFactory("flcDataOcorrencia"));
+
+        TableColumn<Fluxocaixa, String> tc_flc_descricao = new TableColumn<>();
+        tc_flc_descricao.setText("Descrição");
+        tc_flc_descricao.setPrefWidth(140.0);
+        tc_flc_descricao.setCellValueFactory(new PropertyValueFactory("flcDescricao"));
+
+        TableColumn<Fluxocaixa, String> tc_flc_forma_pagamento = new TableColumn<>();
+        tc_flc_forma_pagamento.setText("Forma de Pagamento");
+        tc_flc_forma_pagamento.setPrefWidth(136.0);
+        tc_flc_forma_pagamento.setCellValueFactory(new PropertyValueFactory("flcFormaPagamento"));
+
+        TableColumn<Fluxocaixa, String> tc_flc_sub_categoria = new TableColumn<>();
+        tc_flc_sub_categoria.setText("Sub-categoria");
+        tc_flc_sub_categoria.setPrefWidth(136.0);
+        tc_flc_sub_categoria.setCellValueFactory(new PropertyValueFactory("flcFkSbcCodigo"));
+
+        TableColumn<Fluxocaixa, Double> tc_flc_valor = new TableColumn<>();
+        tc_flc_valor.setText("Valor");
+        tc_flc_valor.setPrefWidth(60.0);
+        tc_flc_valor.setCellValueFactory(new PropertyValueFactory("flcValor"));
+
+        tableFluxo.getColumns().addAll(tc_flc_codigo,
+                tc_flc_descricao,
+                tc_flc_data_ocorrencia,
+                tc_flc_forma_pagamento,
+                tc_flc_categoria,
+                tc_flc_sub_categoria,
+                tc_flc_valor);
+        tableFluxo.setItems(listaFluxos);
+
+    }
+
+    private void setupTextFieldsAndButtonsFlc(boolean clear) {
+        tfCodFlc.setDisable(true);
+        tfDesFlc.setDisable(clear);
+        tfValFlc.setDisable(clear);
+
+        cbCtcFlc.setItems(null);
+        cbCtcFlc.setItems(listaCategoriasDesc);
+        cbCtcFlc.setDisable(clear);
+
+        cbFrmPag.setItems(null);
+        cbFrmPag.setItems(listaPagamento);
+        cbFrmPag.setDisable(clear);
+        
+        cbSubCtc.setDisable(clear);
+
+        btnSalvar.setDisable(clear);
+        btnCancelar.setDisable(clear);
+
+        dpDataFlc.setDisable(clear);
+        if (clear) {
+            tfCodFlc.setText("");
+            tfDesFlc.setText("");
+            tfValFlc.setText("");
+            dpDataFlc.setValue(LocalDate.now());
+            cbCtcFlc.getSelectionModel().selectFirst();
+            cbFrmPag.getSelectionModel().selectFirst();
+        }
+    }
+
+    private void addListenerForTableFluxo() {
+        tableFluxo.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                btnEditFluxo.setDisable(false);
+                btnDeleteFluxo.setDisable(false);
+                tfCodFlc.setText(String.valueOf(newSelection.getFlcCodigo()));
+                tfDesFlc.setText(newSelection.getFlcDescricao());
+                tfValFlc.setText(String.valueOf(newSelection.getFlcValor()));
+                dpDataFlc.setValue(newSelection.getFlcDataOcorrencia().toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate());
+                listaCategorias.forEach((categoria) -> {
+                    if (categoria.getCtcDescricao().equals(newSelection.getFlcFkCtcCodigo().getCtcDescricao())) {
+                        categoriaEscolhida = categoria;
+                    }
+                });
+                cbCtcFlc.getSelectionModel().select(categoriaEscolhida.getCtcDescricao());
+                listaSubCategorias.forEach((subCategoria) -> {
+                    if (subCategoria.getSbcDescricao().equals(newSelection.getFlcFkSbcCodigo().getSbcDescricao())) {
+                        subCategoriaEscolhida = subCategoria;
+                    }
+                });
+                cbSubCtc.getSelectionModel().select(categoriaEscolhida.getCtcDescricao());
+                cbFrmPag.getSelectionModel().select(newSelection.getFlcFormaPagamento());
+            } else {
+                btnEditFluxo.setDisable(true);
+                btnDeleteFluxo.setDisable(true);
+                tfCodFlc.setText("");
+                tfDesFlc.setText("");
+                tfValFlc.setText("");
+                dpDataFlc.setValue(LocalDate.now());
+                cbCtcFlc.getSelectionModel().selectFirst();
+                cbFrmPag.getSelectionModel().selectFirst();
+            }
+        });
+    }
+
+    private void addListenerForComboBoxCategorias() {
+        cbCtcFlc.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                listaSubCategoriasDesc.clear();
+                listaCategorias.forEach((categoria) -> {
+                    if (categoria.getCtcDescricao().equals(cbCtcFlc.getValue())) {
+                        categoriaEscolhida = categoria;
+                    }
+                });
+                listaSubCategorias.forEach((subCategoria) -> {
+                    if (Objects.equals(subCategoria.getSbcFkCtcCodigo().getCtcCodigo(), categoriaEscolhida.getCtcCodigo())) {
+                        listaSubCategoriasDesc.add(subCategoria.getSbcDescricao());
+                    }
+                });
+                cbSubCtc.setItems(null);
+                cbSubCtc.setItems(listaSubCategoriasDesc);
+            } else {
+                cbSubCtc.setItems(null);
+            }
+        });
+    }
+
 }
