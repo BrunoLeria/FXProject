@@ -352,7 +352,7 @@ public class CtcTableController {
     private void setupTableCategorias() throws Exception {
         TableColumn<Categoriascontas, Integer> tc_ctc_codigo = new TableColumn<>();
         tc_ctc_codigo.setText("Código");
-        tc_ctc_codigo.setPrefWidth(75.0);
+        tc_ctc_codigo.setPrefWidth(93.0);
         tc_ctc_codigo.setCellValueFactory(new PropertyValueFactory("ctcCodigo"));
 
         TableColumn<Categoriascontas, String> tc_ctc_descricao = new TableColumn<>();
@@ -362,7 +362,7 @@ public class CtcTableController {
 
         TableColumn<Categoriascontas, Boolean> tc_ctc_positiva = new TableColumn<>();
         tc_ctc_positiva.setText("Positiva");
-        tc_ctc_positiva.setPrefWidth(70.0);
+        tc_ctc_positiva.setPrefWidth(93.0);
         tc_ctc_positiva.setCellValueFactory(new PropertyValueFactory("ctcPositva"));
 
         tableCategoria.getColumns().addAll(tc_ctc_codigo, tc_ctc_descricao, tc_ctc_positiva);
@@ -373,7 +373,7 @@ public class CtcTableController {
     private void setupTableSubCategorias() throws Exception {
         TableColumn<Subcategorias, Integer> tc_sbc_codigo = new TableColumn<>();
         tc_sbc_codigo.setText("Código");
-        tc_sbc_codigo.setPrefWidth(75.0);
+        tc_sbc_codigo.setPrefWidth(93.0);
         tc_sbc_codigo.setCellValueFactory(new PropertyValueFactory("sbcCodigo"));
 
         TableColumn<Subcategorias, String> tc_sbc_descricao = new TableColumn<>();
@@ -383,7 +383,7 @@ public class CtcTableController {
 
         TableColumn<Subcategorias, String> tc_sbc_fk_ctc_codigo = new TableColumn<>();
         tc_sbc_fk_ctc_codigo.setText("Categoria");
-        tc_sbc_fk_ctc_codigo.setPrefWidth(70.0);
+        tc_sbc_fk_ctc_codigo.setPrefWidth(93.0);
         tc_sbc_fk_ctc_codigo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSbcFkCtcCodigo().getCtcDescricao()));
 
         tableSubCategoria.getColumns().addAll(tc_sbc_codigo, tc_sbc_descricao, tc_sbc_fk_ctc_codigo);
@@ -408,8 +408,6 @@ public class CtcTableController {
         tfDesSub.setDisable(clear);
         cbCatSub.setDisable(clear);
 
-        cbCatSub.setItems(null);
-        cbCatSub.setItems(listaCategoriasDesc);
         btnSubSalvar.setDisable(clear);
         btnSubCancelar.setDisable(clear);
         miSubSalvar.setDisable(clear);
@@ -424,6 +422,8 @@ public class CtcTableController {
         btnDeleteSubCategoria.setDisable(true);
         miEditSubCategoria.setDisable(true);
         miDeleteSubCategoria.setDisable(true);
+        cbCatSub.setItems(null);
+        cbCatSub.setItems(listaCategoriasDesc);
         tfCodSub.setText("");
         tfDesSub.setText("");
         cbCatSub.getSelectionModel().selectFirst();

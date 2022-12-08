@@ -19,7 +19,7 @@ public enum Pagamento {
     private String nome;
     
     public int selecionarPagamento(){
-        return ordinal() + 1;
+        return ordinal();
     }
     
     public String getNome() {

@@ -369,7 +369,7 @@ public class HomeScreenController {
         tc_flc_sub_categoria.setText("Sub-categoria");
         tc_flc_sub_categoria.setPrefWidth(136.0);
         tc_flc_sub_categoria.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFlcFkSbcCodigo().getSbcDescricao()));
-                     
+
         TableColumn<Fluxocaixa, String> tc_flc_is_profit_flow = new TableColumn<>();
         tc_flc_is_profit_flow.setText("Lucro/Despesa");
         tc_flc_is_profit_flow.setPrefWidth(100.0);
@@ -396,17 +396,9 @@ public class HomeScreenController {
         tfCodFlc.setDisable(true);
         tfDesFlc.setDisable(clear);
         tfValFlc.setDisable(clear);
-
-        cbCtcFlc.setItems(null);
-        cbCtcFlc.setItems(listaCategoriasDesc);
         cbCtcFlc.setDisable(clear);
-
-        cbFrmPag.setItems(null);
-        cbFrmPag.setItems(listaPagamento);
         cbFrmPag.setDisable(clear);
-
         cbSubCtc.setDisable(clear);
-
         btnSalvar.setDisable(clear);
         btnCancelar.setDisable(clear);
         miSalvar.setDisable(clear);
@@ -423,12 +415,21 @@ public class HomeScreenController {
         btnDeleteFluxo.setDisable(true);
         miEditFluxo.setDisable(true);
         miDeleteFluxo.setDisable(true);
+        cbCtcFlc.setItems(null);
+        cbCtcFlc.setItems(listaCategoriasDesc);
+        cbFrmPag.setItems(null);
+        cbFrmPag.setItems(listaPagamento);
         tfCodFlc.setText("");
         tfDesFlc.setText("");
         tfValFlc.setText("");
         dpDataFlc.setValue(LocalDate.now());
         cbCtcFlc.getSelectionModel().selectFirst();
         cbFrmPag.getSelectionModel().selectFirst();
+        if (!listaSubCategoriasDesc.isEmpty()) {
+            cbSubCtc.setItems(null);
+            cbSubCtc.setItems(listaSubCategoriasDesc);
+            cbSubCtc.getSelectionModel().selectFirst();
+        }
     }
 
     private void addListenerForTableFluxo() {
@@ -455,7 +456,7 @@ public class HomeScreenController {
                         subCategoriaEscolhida = subCategoria;
                     }
                 });
-                cbSubCtc.getSelectionModel().select(categoriaEscolhida.getCtcDescricao());
+                cbSubCtc.getSelectionModel().select(subCategoriaEscolhida.getSbcDescricao());
                 cbFrmPag.getSelectionModel().select(newSelection.getFlcFormaPagamento());
             } else {
                 btnEditFluxo.setDisable(true);
@@ -468,6 +469,10 @@ public class HomeScreenController {
                 dpDataFlc.setValue(LocalDate.now());
                 cbCtcFlc.getSelectionModel().selectFirst();
                 cbFrmPag.getSelectionModel().selectFirst();
+                if (!listaSubCategoriasDesc.isEmpty()) {
+                    cbSubCtc.setItems(listaSubCategoriasDesc);
+                    cbSubCtc.getSelectionModel().selectFirst();
+                }
             }
         });
     }

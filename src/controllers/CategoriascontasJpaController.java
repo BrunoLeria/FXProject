@@ -122,39 +122,47 @@ public class CategoriascontasJpaController implements Serializable {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
             Collection<Subcategorias> attachedSubcategoriasCollectionNew = new ArrayList<Subcategorias>();
-            for (Subcategorias subcategoriasCollectionNewSubcategoriasToAttach : subcategoriasCollectionNew) {
-                subcategoriasCollectionNewSubcategoriasToAttach = em.getReference(subcategoriasCollectionNewSubcategoriasToAttach.getClass(), subcategoriasCollectionNewSubcategoriasToAttach.getSbcCodigo());
-                attachedSubcategoriasCollectionNew.add(subcategoriasCollectionNewSubcategoriasToAttach);
+            if (subcategoriasCollectionNew != null) {
+                for (Subcategorias subcategoriasCollectionNewSubcategoriasToAttach : subcategoriasCollectionNew) {
+                    subcategoriasCollectionNewSubcategoriasToAttach = em.getReference(subcategoriasCollectionNewSubcategoriasToAttach.getClass(), subcategoriasCollectionNewSubcategoriasToAttach.getSbcCodigo());
+                    attachedSubcategoriasCollectionNew.add(subcategoriasCollectionNewSubcategoriasToAttach);
+                }
+                subcategoriasCollectionNew = attachedSubcategoriasCollectionNew;
+                categoriascontas.setSubcategoriasCollection(subcategoriasCollectionNew);
             }
-            subcategoriasCollectionNew = attachedSubcategoriasCollectionNew;
-            categoriascontas.setSubcategoriasCollection(subcategoriasCollectionNew);
             Collection<Fluxocaixa> attachedFluxocaixaCollectionNew = new ArrayList<Fluxocaixa>();
-            for (Fluxocaixa fluxocaixaCollectionNewFluxocaixaToAttach : fluxocaixaCollectionNew) {
-                fluxocaixaCollectionNewFluxocaixaToAttach = em.getReference(fluxocaixaCollectionNewFluxocaixaToAttach.getClass(), fluxocaixaCollectionNewFluxocaixaToAttach.getFlcCodigo());
-                attachedFluxocaixaCollectionNew.add(fluxocaixaCollectionNewFluxocaixaToAttach);
+            if (fluxocaixaCollectionNew != null) {
+                for (Fluxocaixa fluxocaixaCollectionNewFluxocaixaToAttach : fluxocaixaCollectionNew) {
+                    fluxocaixaCollectionNewFluxocaixaToAttach = em.getReference(fluxocaixaCollectionNewFluxocaixaToAttach.getClass(), fluxocaixaCollectionNewFluxocaixaToAttach.getFlcCodigo());
+                    attachedFluxocaixaCollectionNew.add(fluxocaixaCollectionNewFluxocaixaToAttach);
+                }
+                fluxocaixaCollectionNew = attachedFluxocaixaCollectionNew;
+                categoriascontas.setFluxocaixaCollection(fluxocaixaCollectionNew);
             }
-            fluxocaixaCollectionNew = attachedFluxocaixaCollectionNew;
-            categoriascontas.setFluxocaixaCollection(fluxocaixaCollectionNew);
             categoriascontas = em.merge(categoriascontas);
-            for (Subcategorias subcategoriasCollectionNewSubcategorias : subcategoriasCollectionNew) {
-                if (!subcategoriasCollectionOld.contains(subcategoriasCollectionNewSubcategorias)) {
-                    Categoriascontas oldSbcFkCtcCodigoOfSubcategoriasCollectionNewSubcategorias = subcategoriasCollectionNewSubcategorias.getSbcFkCtcCodigo();
-                    subcategoriasCollectionNewSubcategorias.setSbcFkCtcCodigo(categoriascontas);
-                    subcategoriasCollectionNewSubcategorias = em.merge(subcategoriasCollectionNewSubcategorias);
-                    if (oldSbcFkCtcCodigoOfSubcategoriasCollectionNewSubcategorias != null && !oldSbcFkCtcCodigoOfSubcategoriasCollectionNewSubcategorias.equals(categoriascontas)) {
-                        oldSbcFkCtcCodigoOfSubcategoriasCollectionNewSubcategorias.getSubcategoriasCollection().remove(subcategoriasCollectionNewSubcategorias);
-                        oldSbcFkCtcCodigoOfSubcategoriasCollectionNewSubcategorias = em.merge(oldSbcFkCtcCodigoOfSubcategoriasCollectionNewSubcategorias);
+            if (subcategoriasCollectionNew != null) {
+                for (Subcategorias subcategoriasCollectionNewSubcategorias : subcategoriasCollectionNew) {
+                    if (!subcategoriasCollectionOld.contains(subcategoriasCollectionNewSubcategorias)) {
+                        Categoriascontas oldSbcFkCtcCodigoOfSubcategoriasCollectionNewSubcategorias = subcategoriasCollectionNewSubcategorias.getSbcFkCtcCodigo();
+                        subcategoriasCollectionNewSubcategorias.setSbcFkCtcCodigo(categoriascontas);
+                        subcategoriasCollectionNewSubcategorias = em.merge(subcategoriasCollectionNewSubcategorias);
+                        if (oldSbcFkCtcCodigoOfSubcategoriasCollectionNewSubcategorias != null && !oldSbcFkCtcCodigoOfSubcategoriasCollectionNewSubcategorias.equals(categoriascontas)) {
+                            oldSbcFkCtcCodigoOfSubcategoriasCollectionNewSubcategorias.getSubcategoriasCollection().remove(subcategoriasCollectionNewSubcategorias);
+                            oldSbcFkCtcCodigoOfSubcategoriasCollectionNewSubcategorias = em.merge(oldSbcFkCtcCodigoOfSubcategoriasCollectionNewSubcategorias);
+                        }
                     }
                 }
             }
-            for (Fluxocaixa fluxocaixaCollectionNewFluxocaixa : fluxocaixaCollectionNew) {
-                if (!fluxocaixaCollectionOld.contains(fluxocaixaCollectionNewFluxocaixa)) {
-                    Categoriascontas oldFlcFkCtcCodigoOfFluxocaixaCollectionNewFluxocaixa = fluxocaixaCollectionNewFluxocaixa.getFlcFkCtcCodigo();
-                    fluxocaixaCollectionNewFluxocaixa.setFlcFkCtcCodigo(categoriascontas);
-                    fluxocaixaCollectionNewFluxocaixa = em.merge(fluxocaixaCollectionNewFluxocaixa);
-                    if (oldFlcFkCtcCodigoOfFluxocaixaCollectionNewFluxocaixa != null && !oldFlcFkCtcCodigoOfFluxocaixaCollectionNewFluxocaixa.equals(categoriascontas)) {
-                        oldFlcFkCtcCodigoOfFluxocaixaCollectionNewFluxocaixa.getFluxocaixaCollection().remove(fluxocaixaCollectionNewFluxocaixa);
-                        oldFlcFkCtcCodigoOfFluxocaixaCollectionNewFluxocaixa = em.merge(oldFlcFkCtcCodigoOfFluxocaixaCollectionNewFluxocaixa);
+            if (fluxocaixaCollectionNew != null) {
+                for (Fluxocaixa fluxocaixaCollectionNewFluxocaixa : fluxocaixaCollectionNew) {
+                    if (!fluxocaixaCollectionOld.contains(fluxocaixaCollectionNewFluxocaixa)) {
+                        Categoriascontas oldFlcFkCtcCodigoOfFluxocaixaCollectionNewFluxocaixa = fluxocaixaCollectionNewFluxocaixa.getFlcFkCtcCodigo();
+                        fluxocaixaCollectionNewFluxocaixa.setFlcFkCtcCodigo(categoriascontas);
+                        fluxocaixaCollectionNewFluxocaixa = em.merge(fluxocaixaCollectionNewFluxocaixa);
+                        if (oldFlcFkCtcCodigoOfFluxocaixaCollectionNewFluxocaixa != null && !oldFlcFkCtcCodigoOfFluxocaixaCollectionNewFluxocaixa.equals(categoriascontas)) {
+                            oldFlcFkCtcCodigoOfFluxocaixaCollectionNewFluxocaixa.getFluxocaixaCollection().remove(fluxocaixaCollectionNewFluxocaixa);
+                            oldFlcFkCtcCodigoOfFluxocaixaCollectionNewFluxocaixa = em.merge(oldFlcFkCtcCodigoOfFluxocaixaCollectionNewFluxocaixa);
+                        }
                     }
                 }
             }
@@ -259,5 +267,5 @@ public class CategoriascontasJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

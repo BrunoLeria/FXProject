@@ -96,12 +96,14 @@ public class SubcategoriasJpaController implements Serializable {
                 subcategorias.setSbcFkCtcCodigo(sbcFkCtcCodigoNew);
             }
             Collection<Fluxocaixa> attachedFluxocaixaCollectionNew = new ArrayList<Fluxocaixa>();
-            for (Fluxocaixa fluxocaixaCollectionNewFluxocaixaToAttach : fluxocaixaCollectionNew) {
-                fluxocaixaCollectionNewFluxocaixaToAttach = em.getReference(fluxocaixaCollectionNewFluxocaixaToAttach.getClass(), fluxocaixaCollectionNewFluxocaixaToAttach.getFlcCodigo());
-                attachedFluxocaixaCollectionNew.add(fluxocaixaCollectionNewFluxocaixaToAttach);
+            if (fluxocaixaCollectionNew != null) {
+                for (Fluxocaixa fluxocaixaCollectionNewFluxocaixaToAttach : fluxocaixaCollectionNew) {
+                    fluxocaixaCollectionNewFluxocaixaToAttach = em.getReference(fluxocaixaCollectionNewFluxocaixaToAttach.getClass(), fluxocaixaCollectionNewFluxocaixaToAttach.getFlcCodigo());
+                    attachedFluxocaixaCollectionNew.add(fluxocaixaCollectionNewFluxocaixaToAttach);
+                }
+                fluxocaixaCollectionNew = attachedFluxocaixaCollectionNew;
+                subcategorias.setFluxocaixaCollection(fluxocaixaCollectionNew);
             }
-            fluxocaixaCollectionNew = attachedFluxocaixaCollectionNew;
-            subcategorias.setFluxocaixaCollection(fluxocaixaCollectionNew);
             subcategorias = em.merge(subcategorias);
             if (sbcFkCtcCodigoOld != null && !sbcFkCtcCodigoOld.equals(sbcFkCtcCodigoNew)) {
                 sbcFkCtcCodigoOld.getSubcategoriasCollection().remove(subcategorias);
@@ -117,14 +119,16 @@ public class SubcategoriasJpaController implements Serializable {
                     fluxocaixaCollectionOldFluxocaixa = em.merge(fluxocaixaCollectionOldFluxocaixa);
                 }
             }
-            for (Fluxocaixa fluxocaixaCollectionNewFluxocaixa : fluxocaixaCollectionNew) {
-                if (!fluxocaixaCollectionOld.contains(fluxocaixaCollectionNewFluxocaixa)) {
-                    Subcategorias oldFlcFkSbcCodigoOfFluxocaixaCollectionNewFluxocaixa = fluxocaixaCollectionNewFluxocaixa.getFlcFkSbcCodigo();
-                    fluxocaixaCollectionNewFluxocaixa.setFlcFkSbcCodigo(subcategorias);
-                    fluxocaixaCollectionNewFluxocaixa = em.merge(fluxocaixaCollectionNewFluxocaixa);
-                    if (oldFlcFkSbcCodigoOfFluxocaixaCollectionNewFluxocaixa != null && !oldFlcFkSbcCodigoOfFluxocaixaCollectionNewFluxocaixa.equals(subcategorias)) {
-                        oldFlcFkSbcCodigoOfFluxocaixaCollectionNewFluxocaixa.getFluxocaixaCollection().remove(fluxocaixaCollectionNewFluxocaixa);
-                        oldFlcFkSbcCodigoOfFluxocaixaCollectionNewFluxocaixa = em.merge(oldFlcFkSbcCodigoOfFluxocaixaCollectionNewFluxocaixa);
+            if (fluxocaixaCollectionNew != null) {
+                for (Fluxocaixa fluxocaixaCollectionNewFluxocaixa : fluxocaixaCollectionNew) {
+                    if (!fluxocaixaCollectionOld.contains(fluxocaixaCollectionNewFluxocaixa)) {
+                        Subcategorias oldFlcFkSbcCodigoOfFluxocaixaCollectionNewFluxocaixa = fluxocaixaCollectionNewFluxocaixa.getFlcFkSbcCodigo();
+                        fluxocaixaCollectionNewFluxocaixa.setFlcFkSbcCodigo(subcategorias);
+                        fluxocaixaCollectionNewFluxocaixa = em.merge(fluxocaixaCollectionNewFluxocaixa);
+                        if (oldFlcFkSbcCodigoOfFluxocaixaCollectionNewFluxocaixa != null && !oldFlcFkSbcCodigoOfFluxocaixaCollectionNewFluxocaixa.equals(subcategorias)) {
+                            oldFlcFkSbcCodigoOfFluxocaixaCollectionNewFluxocaixa.getFluxocaixaCollection().remove(fluxocaixaCollectionNewFluxocaixa);
+                            oldFlcFkSbcCodigoOfFluxocaixaCollectionNewFluxocaixa = em.merge(oldFlcFkSbcCodigoOfFluxocaixaCollectionNewFluxocaixa);
+                        }
                     }
                 }
             }
@@ -221,5 +225,5 @@ public class SubcategoriasJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }
