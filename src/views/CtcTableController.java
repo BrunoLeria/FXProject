@@ -18,6 +18,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -84,6 +86,45 @@ public class CtcTableController {
 
     @FXML
     private CheckBox ckbPosCat;
+    
+    @FXML
+    private MenuBar menubar;
+    
+    @FXML
+    private MenuItem miAddCategoria;
+
+    @FXML
+    private MenuItem miAddSubCategoria;
+
+    @FXML
+    private MenuItem miCancelar;
+
+    @FXML
+    private MenuItem miDeleteCategoria;
+
+    @FXML
+    private MenuItem miDeleteSubCategoria;
+
+    @FXML
+    private MenuItem miEditCategoria;
+
+    @FXML
+    private MenuItem miEditSubCategoria;
+
+    @FXML
+    private MenuItem miExit;
+
+    @FXML
+    private MenuItem miHelp;
+
+    @FXML
+    private MenuItem miSalvar;
+
+    @FXML
+    private MenuItem miSubCancelar;
+
+    @FXML
+    private MenuItem miSubSalvar;
 
     @FXML
     private BorderPane root;
@@ -216,7 +257,14 @@ public class CtcTableController {
 
     @FXML
     void exit(ActionEvent event) {
+        root.getChildren().remove(menubar);
         loadUI("HomeScreen.fxml");
+    }
+    
+    @FXML
+    void openHelp(ActionEvent event) {
+        root.getChildren().remove(menubar);
+        loadUI("HelpScreen.fxml");
     }
 
     @FXML
@@ -235,6 +283,18 @@ public class CtcTableController {
         assert btnSubSalvar != null : "fx:id=\"btnSubSalvar\" was not injected: check your FXML file 'CtcTable.fxml'.";
         assert cbCatSub != null : "fx:id=\"cbCatSub\" was not injected: check your FXML file 'CtcTable.fxml'.";
         assert ckbPosCat != null : "fx:id=\"ckbPosCat\" was not injected: check your FXML file 'CtcTable.fxml'.";
+        assert miAddCategoria != null : "fx:id=\"miAddCategoria\" was not injected: check your FXML file 'CtcTable.fxml'.";
+        assert miAddSubCategoria != null : "fx:id=\"miAddSubCategoria\" was not injected: check your FXML file 'CtcTable.fxml'.";
+        assert miCancelar != null : "fx:id=\"miCancelar\" was not injected: check your FXML file 'CtcTable.fxml'.";
+        assert miDeleteCategoria != null : "fx:id=\"miDeleteCategoria\" was not injected: check your FXML file 'CtcTable.fxml'.";
+        assert miDeleteSubCategoria != null : "fx:id=\"miDeleteSubCategoria\" was not injected: check your FXML file 'CtcTable.fxml'.";
+        assert miEditCategoria != null : "fx:id=\"miEditCategoria\" was not injected: check your FXML file 'CtcTable.fxml'.";
+        assert miEditSubCategoria != null : "fx:id=\"miEditSubCategoria\" was not injected: check your FXML file 'CtcTable.fxml'.";
+        assert miExit != null : "fx:id=\"miExit\" was not injected: check your FXML file 'CtcTable.fxml'.";
+        assert miHelp != null : "fx:id=\"miHelp\" was not injected: check your FXML file 'CtcTable.fxml'.";
+        assert miSalvar != null : "fx:id=\"miSalvar\" was not injected: check your FXML file 'CtcTable.fxml'.";
+        assert miSubCancelar != null : "fx:id=\"miSubCancelar\" was not injected: check your FXML file 'CtcTable.fxml'.";
+        assert miSubSalvar != null : "fx:id=\"miSubSalvar\" was not injected: check your FXML file 'CtcTable.fxml'.";
         assert root != null : "fx:id=\"root\" was not injected: check your FXML file 'CtcTable.fxml'.";
         assert tableCategoria != null : "fx:id=\"tableCategoria\" was not injected: check your FXML file 'CtcTable.fxml'.";
         assert tableSubCategoria != null : "fx:id=\"tableSubCategoria\" was not injected: check your FXML file 'CtcTable.fxml'.";
@@ -333,6 +393,8 @@ public class CtcTableController {
         ckbPosCat.setDisable(clear);
         btnSalvar.setDisable(clear);
         btnCancelar.setDisable(clear);
+        miSalvar.setDisable(clear);
+        miCancelar.setDisable(clear);
         if (clear) {
             tfCodCat.setText("");
             tfDesCat.setText("");
@@ -349,6 +411,8 @@ public class CtcTableController {
         cbCatSub.setItems(listaCategoriasDesc);
         btnSubSalvar.setDisable(clear);
         btnSubCancelar.setDisable(clear);
+        miSubSalvar.setDisable(clear);
+        miSubCancelar.setDisable(clear);
         if (clear) {
             tfCodSub.setText("");
             tfDesSub.setText("");
@@ -369,12 +433,16 @@ public class CtcTableController {
             if (newSelection != null) {
                 btnEditCategoria.setDisable(false);
                 btnDeleteCategoria.setDisable(false);
+                miEditCategoria.setDisable(false);
+                miDeleteCategoria.setDisable(false);
                 tfCodCat.setText(String.valueOf(newSelection.getCtcCodigo()));
                 tfDesCat.setText(newSelection.getCtcDescricao());
                 ckbPosCat.setSelected(newSelection.getCtcPositva());
             } else {
                 btnEditCategoria.setDisable(true);
                 btnDeleteCategoria.setDisable(true);
+                miEditCategoria.setDisable(true);
+                miDeleteCategoria.setDisable(true);
                 tfCodCat.setText("");
                 tfDesCat.setText("");
                 ckbPosCat.setSelected(false);
@@ -387,6 +455,8 @@ public class CtcTableController {
             if (newSelection != null) {
                 btnEditSubCategoria.setDisable(false);
                 btnDeleteSubCategoria.setDisable(false);
+                miEditSubCategoria.setDisable(false);
+                miDeleteSubCategoria.setDisable(false);
                 tfCodSub.setText(String.valueOf(newSelection.getSbcCodigo()));
                 tfDesSub.setText(newSelection.getSbcDescricao());
                 listaCategorias.forEach((categoria) -> {
@@ -398,6 +468,8 @@ public class CtcTableController {
             } else {
                 btnEditSubCategoria.setDisable(true);
                 btnDeleteSubCategoria.setDisable(true);
+                miEditSubCategoria.setDisable(true);
+                miDeleteSubCategoria.setDisable(true);
                 tfCodSub.setText("");
                 tfDesSub.setText("");
                 cbCatSub.getSelectionModel().selectFirst();

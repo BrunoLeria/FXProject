@@ -21,6 +21,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -93,6 +95,36 @@ public class HomeScreenController {
 
     @FXML
     private DatePicker dpDataFlc;
+
+    @FXML
+    private MenuBar menubar;
+
+    @FXML
+    private MenuItem miAddFluxo;
+
+    @FXML
+    private MenuItem miCancelar;
+
+    @FXML
+    private MenuItem miCategorias;
+
+    @FXML
+    private MenuItem miDeleteFluxo;
+
+    @FXML
+    private MenuItem miEditFluxo;
+
+    @FXML
+    private MenuItem miExit;
+
+    @FXML
+    private MenuItem miHelp;
+
+    @FXML
+    private MenuItem miReportFluxo;
+
+    @FXML
+    private MenuItem miSalvar;
 
     @FXML
     private BorderPane root;
@@ -194,17 +226,19 @@ public class HomeScreenController {
 
     @FXML
     void openCat(ActionEvent event) {
+        root.getChildren().remove(menubar);
         loadUI("CtcTable.fxml");
     }
 
     @FXML
     void openHelp(ActionEvent event) {
-
+        root.getChildren().remove(menubar);
+        loadUI("HelpScreen.fxml");
     }
 
     @FXML
     void openReport(ActionEvent event) {
-
+        root.getChildren().remove(menubar);
     }
 
     @FXML
@@ -222,11 +256,21 @@ public class HomeScreenController {
         assert cbFrmPag != null : "fx:id=\"cbFrmPag\" was not injected: check your FXML file 'HomeScreen.fxml'.";
         assert cbSubCtc != null : "fx:id=\"cbSubCtc\" was not injected: check your FXML file 'HomeScreen.fxml'.";
         assert dpDataFlc != null : "fx:id=\"dpDataFlc\" was not injected: check your FXML file 'HomeScreen.fxml'.";
+        assert menubar != null : "fx:id=\"menubar\" was not injected: check your FXML file 'HomeScreen.fxml'.";
+        assert miAddFluxo != null : "fx:id=\"miAddFluxo\" was not injected: check your FXML file 'HomeScreen.fxml'.";
+        assert miCancelar != null : "fx:id=\"miCancelar\" was not injected: check your FXML file 'HomeScreen.fxml'.";
+        assert miCategorias != null : "fx:id=\"miCategorias\" was not injected: check your FXML file 'HomeScreen.fxml'.";
+        assert miDeleteFluxo != null : "fx:id=\"miDeleteFluxo\" was not injected: check your FXML file 'HomeScreen.fxml'.";
+        assert miEditFluxo != null : "fx:id=\"miEditFluxo\" was not injected: check your FXML file 'HomeScreen.fxml'.";
+        assert miExit != null : "fx:id=\"miExit\" was not injected: check your FXML file 'HomeScreen.fxml'.";
+        assert miHelp != null : "fx:id=\"miHelp\" was not injected: check your FXML file 'HomeScreen.fxml'.";
+        assert miReportFluxo != null : "fx:id=\"miReportFluxo\" was not injected: check your FXML file 'HomeScreen.fxml'.";
+        assert miSalvar != null : "fx:id=\"miSalvar\" was not injected: check your FXML file 'HomeScreen.fxml'.";
         assert root != null : "fx:id=\"root\" was not injected: check your FXML file 'HomeScreen.fxml'.";
         assert tableFluxo != null : "fx:id=\"tableFluxo\" was not injected: check your FXML file 'HomeScreen.fxml'.";
         assert tfCodFlc != null : "fx:id=\"tfCodFlc\" was not injected: check your FXML file 'HomeScreen.fxml'.";
         assert tfDesFlc != null : "fx:id=\"tfDesFlc\" was not injected: check your FXML file 'HomeScreen.fxml'.";
-        assert tfValFlc != null : "fx:id=\"tfValFlc\" was not injected: check your FXML file 'HomeScreen.fxml'.";
+        assert tfValFlc != null : "fx:id=\"tfValFlc\" was    not injected: check your FXML file 'HomeScreen.fxml'.";
 
         try {
             addListenerForTableFluxo();
@@ -350,11 +394,13 @@ public class HomeScreenController {
         cbFrmPag.setItems(null);
         cbFrmPag.setItems(listaPagamento);
         cbFrmPag.setDisable(clear);
-        
+
         cbSubCtc.setDisable(clear);
 
         btnSalvar.setDisable(clear);
         btnCancelar.setDisable(clear);
+        miSalvar.setDisable(clear);
+        miCancelar.setDisable(clear);
 
         dpDataFlc.setDisable(clear);
         if (clear) {
@@ -372,6 +418,8 @@ public class HomeScreenController {
             if (newSelection != null) {
                 btnEditFluxo.setDisable(false);
                 btnDeleteFluxo.setDisable(false);
+                miEditFluxo.setDisable(false);
+                miDeleteFluxo.setDisable(false);
                 tfCodFlc.setText(String.valueOf(newSelection.getFlcCodigo()));
                 tfDesFlc.setText(newSelection.getFlcDescricao());
                 tfValFlc.setText(String.valueOf(newSelection.getFlcValor()));
@@ -394,6 +442,8 @@ public class HomeScreenController {
             } else {
                 btnEditFluxo.setDisable(true);
                 btnDeleteFluxo.setDisable(true);
+                miEditFluxo.setDisable(true);
+                miDeleteFluxo.setDisable(true);
                 tfCodFlc.setText("");
                 tfDesFlc.setText("");
                 tfValFlc.setText("");

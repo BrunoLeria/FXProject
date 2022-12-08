@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="root" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.HelpScreenController">
+   <center>
+      <AnchorPane id="AnchorPane" prefHeight="683.0" prefWidth="892.0" styleClass="@../style/style.css">
+          <children>
+              <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="352.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@../images/UTFPR - Identidade Visual -2.png" />
+                  </image>
+              </ImageView>
+              <Label layoutX="179.0" layoutY="293.0" text="Software criado por:" />
+              <Label layoutX="304.0" layoutY="293.0" text="Bruno Cezar Volpato Leria - Aluno de Análise e Desenvolvimento de Sistemas" />
+              <Label layoutX="179.0" layoutY="318.0" text="Para a disciplina de:" />
+              <Label layoutX="304.0" layoutY="318.0" text="AS33J - Linguagem De Programação Orientada A Objetos" />
+              <Label layoutX="179.0" layoutY="344.0" text="Professora:" />
+              <Label layoutX="304.0" layoutY="344.0" text="Mônica Hoeldtke Pietruchinski" />
+              <Label layoutX="179.0" layoutY="369.0" text="Para entrar em contato comigo:" />
+              <Label layoutX="352.0" layoutY="369.0" text="leria@alunos.utfpr.com.br" />
+            <Button fx:id="btnBack" layoutX="428.0" layoutY="535.0" mnemonicParsing="false" onAction="#exit" text="Voltar" />
+          </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

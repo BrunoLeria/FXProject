@@ -6,6 +6,9 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
@@ -17,7 +20,7 @@
 
 <BorderPane fx:id="root" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.CtcTableController">
     <center>
-        <AnchorPane id="AnchorPane" prefHeight="683.0" prefWidth="892.0" styleClass="mainFxmlClass">
+        <AnchorPane id="AnchorPane" prefHeight="683.0" prefWidth="892.0" styleClass="@../style/style.css">
             <stylesheets>
                 <URL value="@ctcform.css" />
             </stylesheets>
@@ -208,4 +211,34 @@
             </padding>
         </AnchorPane>
     </center>
+    <top>
+        <MenuBar fx:id="menubar" BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="Arquivo">
+                    <items>
+                        <MenuItem fx:id="miSalvar" mnemonicParsing="false" onAction="#btnSalvar" text="Salvar categoria" />
+                        <MenuItem fx:id="miCancelar" mnemonicParsing="false" onAction="#btnCancelar" text="Cancelar categoria" />
+                        <MenuItem fx:id="miSubSalvar" mnemonicParsing="false" onAction="#btnSubSalvar" text="Salvar sub-categoria" />
+                        <MenuItem fx:id="miSubCancelar" mnemonicParsing="false" onAction="#btnSubCancelar" text="Cancelar sub-categoria" />
+                        <MenuItem fx:id="miExit" mnemonicParsing="false" onAction="#exit" text="Voltar" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Editar">
+                    <items>
+                        <MenuItem fx:id="miAddCategoria" mnemonicParsing="false" onAction="#addCategoria" text="Adicionar categoria" />
+                        <MenuItem fx:id="miEditCategoria" mnemonicParsing="false" onAction="#editCategoria" text="Editar categoria" />
+                        <MenuItem fx:id="miDeleteCategoria" mnemonicParsing="false" onAction="#deleteCategoria" text="Delete categoria" />
+                        <MenuItem fx:id="miAddSubCategoria" mnemonicParsing="false" onAction="#addSubCategoria" text="Adicionar sub-categoria" />
+                        <MenuItem fx:id="miEditSubCategoria" mnemonicParsing="false" onAction="#editSubCategoria" text="Editar sub-categoria" />
+                        <MenuItem fx:id="miDeleteSubCategoria" mnemonicParsing="false" onAction="#deleteSubCategoria" text="Delete sub-categoria" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Ajuda">
+                    <items>
+                        <MenuItem fx:id="miHelp" mnemonicParsing="false" onAction="#openHelp" text="Sobre" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
 </BorderPane>
