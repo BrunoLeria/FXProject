@@ -108,7 +108,7 @@ public class ReportScreenController {
         tc_flc_data_ocorrencia.setPrefWidth(194.0);
         tc_flc_data_ocorrencia.setCellValueFactory(new PropertyValueFactory("flcDataOcorrencia"));
         tc_flc_data_ocorrencia.setCellFactory(new ColumnFormatter<>(new SimpleDateFormat("dd/MM/YYYY")));
-        
+
         TableColumn<Fluxocaixa, String> tc_flc_descricao = new TableColumn<>();
         tc_flc_descricao.setText("Descrição");
         tc_flc_descricao.setPrefWidth(140.0);
@@ -199,24 +199,29 @@ public class ReportScreenController {
 
         TableColumn<Fluxocaixa, Date> tc_flc_data_ocorrencia_flow = new TableColumn<>();
         tc_flc_data_ocorrencia_flow.setText("Data");
-        tc_flc_data_ocorrencia_flow.setPrefWidth(194.0);
+        tc_flc_data_ocorrencia_flow.setPrefWidth(100.0);
         tc_flc_data_ocorrencia_flow.setCellValueFactory(new PropertyValueFactory("flcDataOcorrencia"));
         tc_flc_data_ocorrencia_flow.setCellFactory(new ColumnFormatter<>(new SimpleDateFormat("dd/MM/YYYY")));
 
         TableColumn<Fluxocaixa, String> tc_flc_descricao_flow = new TableColumn<>();
         tc_flc_descricao_flow.setText("Descrição");
-        tc_flc_descricao_flow.setPrefWidth(140.0);
+        tc_flc_descricao_flow.setPrefWidth(136.0);
         tc_flc_descricao_flow.setCellValueFactory(new PropertyValueFactory("flcDescricao"));
 
         TableColumn<Fluxocaixa, String> tc_flc_forma_pagamento_flow = new TableColumn<>();
         tc_flc_forma_pagamento_flow.setText("Forma de Pagamento");
-        tc_flc_forma_pagamento_flow.setPrefWidth(140.0);
+        tc_flc_forma_pagamento_flow.setPrefWidth(136.0);
         tc_flc_forma_pagamento_flow.setCellValueFactory(cellData -> new SimpleStringProperty(Pagamento.values()[cellData.getValue().getFlcFormaPagamento()].getNome()));
 
         TableColumn<Fluxocaixa, String> tc_flc_sub_categoria_flow = new TableColumn<>();
         tc_flc_sub_categoria_flow.setText("Sub-categoria");
         tc_flc_sub_categoria_flow.setPrefWidth(136.0);
         tc_flc_sub_categoria_flow.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFlcFkSbcCodigo().getSbcDescricao()));
+                
+        TableColumn<Fluxocaixa, String> tc_flc_is_profit_flow = new TableColumn<>();
+        tc_flc_is_profit_flow.setText("Lucro/Despesa");
+        tc_flc_is_profit_flow.setPrefWidth(100.0);
+        tc_flc_is_profit_flow.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFlcFkCtcCodigo().getCtcPositva() ? "Lucro" : "Despesa"));
 
         TableColumn<Fluxocaixa, Double> tc_flc_valor_flow = new TableColumn<>();
         tc_flc_valor_flow.setText("Valor");
@@ -229,6 +234,7 @@ public class ReportScreenController {
                 tc_flc_forma_pagamento_flow,
                 tc_flc_categoria_flow,
                 tc_flc_sub_categoria_flow,
+                tc_flc_is_profit_flow,
                 tc_flc_valor_flow);
         tableFlow.setItems(listaFlow);
     }

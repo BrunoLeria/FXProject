@@ -13,6 +13,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -33,7 +34,10 @@
                                     <children>
                                         <TableView fx:id="tableCategoria" layoutX="152.0" layoutY="29.0" prefHeight="315.0" prefWidth="688.0" style="-fx-background-color: #C9BE14;">
                                         </TableView>
-                                        <Button fx:id="btnAddCategoria" layoutX="14.0" layoutY="138.0" mnemonicParsing="false" onAction="#addCategoria" prefHeight="57.0" prefWidth="68.0">
+                                        <Button fx:id="btnAddCategoria" layoutX="14.0" layoutY="138.0" mnemonicParsing="false" onAction="#addCategoria" prefHeight="57.0" prefWidth="68.0" accessibleText="Adicionar uma nova categoria.">
+                            <tooltip>
+                                <Tooltip text="Adicionar uma nova categoria." />
+                            </tooltip>
                                             <graphic>
                                                 <ImageView>
                                                     <image>
@@ -42,7 +46,10 @@
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="btnDeleteCategoria" layoutX="14.0" layoutY="202.0" mnemonicParsing="false" onAction="#deleteCategoria" prefHeight="57.0" prefWidth="68.0">
+                                        <Button fx:id="btnDeleteCategoria" layoutX="14.0" layoutY="202.0" mnemonicParsing="false" onAction="#deleteCategoria" prefHeight="57.0" prefWidth="68.0" accessibleText="Deletar a categoria selecionada.">
+                            <tooltip>
+                                <Tooltip text="Deletar a categoria selecionada." />
+                            </tooltip>
                                             <graphic>
                                                 <ImageView>
                                                     <image>
@@ -51,7 +58,10 @@
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="btnEditCategoria" layoutX="14.0" layoutY="266.0" mnemonicParsing="false" onAction="#editCategoria" prefHeight="57.0" prefWidth="68.0">
+                                        <Button fx:id="btnEditCategoria" layoutX="14.0" layoutY="266.0" mnemonicParsing="false" onAction="#editCategoria" prefHeight="57.0" prefWidth="68.0" accessibleText="Editar a categoria selecionada.">
+                            <tooltip>
+                                <Tooltip text="Editar a categoria selecionada." />
+                            </tooltip>
                                             <graphic>
                                                 <ImageView>
                                                     <image>
@@ -60,7 +70,10 @@
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="btnExit" layoutX="14.0" layoutY="330.0" mnemonicParsing="false" onAction="#exit" prefHeight="57.0" prefWidth="68.0">
+                                        <Button fx:id="btnExit" layoutX="14.0" layoutY="330.0" mnemonicParsing="false" onAction="#exit" prefHeight="57.0" prefWidth="68.0" accessibleText="Retornar a página inicial.">
+                            <tooltip>
+                                <Tooltip text="Retornar a página inicial." />
+                            </tooltip>
                                             <graphic>
                                                 <ImageView>
                                                     <image>
@@ -70,7 +83,10 @@
                                             </graphic>
                                         </Button>
                                         <AnchorPane layoutX="152.0" layoutY="348.0" prefHeight="237.0" prefWidth="688.0">
-                                            <Button fx:id="btnCancelar" layoutX="590.0" layoutY="161.0" mnemonicParsing="false" onAction="#btnCancelar" prefHeight="56.0" prefWidth="64.0">
+                                            <Button fx:id="btnCancelar" layoutX="590.0" layoutY="161.0" mnemonicParsing="false" onAction="#btnCancelar" prefHeight="56.0" prefWidth="64.0" accessibleText="Cancelar as alterações realizadas.">
+                            <tooltip>
+                                <Tooltip text="Cancelar as alterações realizadas." />
+                            </tooltip>
                                                 <graphic>
                                                     <ImageView>
                                                         <image>
@@ -79,7 +95,10 @@
                                                     </ImageView>
                                                 </graphic>
                                             </Button>
-                                            <Button fx:id="btnSalvar" layoutX="496.0" layoutY="161.0" mnemonicParsing="false" onAction="#btnSalvar" prefHeight="56.0" prefWidth="64.0">
+                                            <Button fx:id="btnSalvar" layoutX="496.0" layoutY="161.0" mnemonicParsing="false" onAction="#btnSalvar" prefHeight="56.0" prefWidth="64.0" accessibleText="Salvar as alterações realizadas.">
+                            <tooltip>
+                                <Tooltip text="Salvar as alterações realizadas." />
+                            </tooltip>
                                                 <graphic>
                                                     <ImageView>
                                                         <image>
@@ -140,7 +159,10 @@
                                                     </opaqueInsets>
                                                 </Label>
                                                 <ComboBox fx:id="cbCatSub" layoutX="75.0" layoutY="118.0" prefWidth="150.0" promptText="Selecione..." />
-                                                <Button fx:id="btnSubCancelar" layoutX="590.0" layoutY="161.0" mnemonicParsing="false" onAction="#btnSubCancelar" prefHeight="56.0" prefWidth="64.0">
+                                                <Button fx:id="btnSubCancelar" layoutX="590.0" layoutY="161.0" mnemonicParsing="false" onAction="#btnSubCancelar" prefHeight="56.0" prefWidth="64.0" accessibleText="Cancelar as alterações realizadas.">
+                            <tooltip>
+                                <Tooltip text="Cancelar as alterações realizadas." />
+                            </tooltip>
                                                     <graphic>
                                                         <ImageView>
                                                             <image>
@@ -149,7 +171,10 @@
                                                         </ImageView>
                                                     </graphic>
                                                 </Button>
-                                                <Button fx:id="btnSubSalvar" layoutX="496.0" layoutY="161.0" mnemonicParsing="false" onAction="#btnSubSalvar" prefHeight="56.0" prefWidth="64.0">
+                                                <Button fx:id="btnSubSalvar" layoutX="496.0" layoutY="161.0" mnemonicParsing="false" onAction="#btnSubSalvar" prefHeight="56.0" prefWidth="64.0" accessibleText="Salvar as alterações realizadas.">
+                            <tooltip>
+                                <Tooltip text="Salvar as alterações realizadas." />
+                            </tooltip>
                                                     <graphic>
                                                         <ImageView>
                                                             <image>
@@ -163,7 +188,10 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </padding>
                                         </AnchorPane>
-                                        <Button fx:id="btnAddSubCategoria" layoutX="14.0" layoutY="138.0" mnemonicParsing="false" onAction="#addSubCategoria" prefHeight="57.0" prefWidth="68.0">
+                                        <Button fx:id="btnAddSubCategoria" layoutX="14.0" layoutY="138.0" mnemonicParsing="false" onAction="#addSubCategoria" prefHeight="57.0" prefWidth="68.0" accessibleText="Adicionar uma nova sub-categoria.">
+                            <tooltip>
+                                <Tooltip text="Adicionar uma nova sub-categoria." />
+                            </tooltip>
                                             <graphic>
                                                 <ImageView>
                                                     <image>
@@ -172,7 +200,10 @@
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="btnDeleteSubCategoria" layoutX="14.0" layoutY="202.0" mnemonicParsing="false" onAction="#deleteSubCategoria" prefHeight="57.0" prefWidth="68.0">
+                                        <Button fx:id="btnDeleteSubCategoria" layoutX="14.0" layoutY="202.0" mnemonicParsing="false" onAction="#deleteSubCategoria" prefHeight="57.0" prefWidth="68.0" accessibleText="Deletar a sub-categoria selecionada.">
+                            <tooltip>
+                                <Tooltip text="Deletar a sub-categoria selecionada." />
+                            </tooltip>
                                             <graphic>
                                                 <ImageView>
                                                     <image>
@@ -181,7 +212,10 @@
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="btnEditSubCategoria" layoutX="14.0" layoutY="266.0" mnemonicParsing="false" onAction="#editSubCategoria" prefHeight="57.0" prefWidth="68.0">
+                                        <Button fx:id="btnEditSubCategoria" layoutX="14.0" layoutY="266.0" mnemonicParsing="false" onAction="#editSubCategoria" prefHeight="57.0" prefWidth="68.0" accessibleText="Editar a sub-categoria selecionada.">
+                            <tooltip>
+                                <Tooltip text="Editar a sub-categoria selecionada." />
+                            </tooltip>
                                             <graphic>
                                                 <ImageView>
                                                     <image>
@@ -190,7 +224,10 @@
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="btnExit1" layoutX="14.0" layoutY="330.0" mnemonicParsing="false" onAction="#exit" prefHeight="57.0" prefWidth="68.0">
+                                        <Button fx:id="btnExit1" layoutX="14.0" layoutY="330.0" mnemonicParsing="false" onAction="#exit" prefHeight="57.0" prefWidth="68.0" accessibleText="Voltar para a página inicial.">
+                            <tooltip>
+                                <Tooltip text="Voltar para a página inicial." />
+                            </tooltip>
                                             <graphic>
                                                 <ImageView>
                                                     <image>

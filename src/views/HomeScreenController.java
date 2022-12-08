@@ -155,6 +155,7 @@ public class HomeScreenController {
                 new ExceptionDisplay("Por favor, adicione pelo menos uma categoria e uma sub-categoria antes de cadastrar um fluxo.");
             } else {
                 setEdit(false);
+                clearFields();
                 setupTextFieldsAndButtonsFlc(false);
             }
         } catch (Exception ex) {
@@ -273,10 +274,7 @@ public class HomeScreenController {
         assert tfValFlc != null : "fx:id=\"tfValFlc\" was    not injected: check your FXML file 'HomeScreen.fxml'.";
 
         try {
-            btnEditFluxo.setDisable(true);
-            btnDeleteFluxo.setDisable(true);
-            miEditFluxo.setDisable(true);
-            miDeleteFluxo.setDisable(true);
+
             addListenerForTableFluxo();
             addListenerForComboBoxCategorias();
             updateLists();
@@ -348,7 +346,7 @@ public class HomeScreenController {
 
         TableColumn<Fluxocaixa, Integer> tc_flc_codigo = new TableColumn<>();
         tc_flc_codigo.setText("Código");
-        tc_flc_codigo.setPrefWidth(75.0);
+        tc_flc_codigo.setPrefWidth(61.0);
         tc_flc_codigo.setCellValueFactory(new PropertyValueFactory("flcCodigo"));
 
         TableColumn<Fluxocaixa, Date> tc_flc_data_ocorrencia = new TableColumn<>();
@@ -359,7 +357,7 @@ public class HomeScreenController {
 
         TableColumn<Fluxocaixa, String> tc_flc_descricao = new TableColumn<>();
         tc_flc_descricao.setText("Descrição");
-        tc_flc_descricao.setPrefWidth(140.0);
+        tc_flc_descricao.setPrefWidth(190.0);
         tc_flc_descricao.setCellValueFactory(new PropertyValueFactory("flcDescricao"));
 
         TableColumn<Fluxocaixa, String> tc_flc_forma_pagamento = new TableColumn<>();
@@ -371,6 +369,11 @@ public class HomeScreenController {
         tc_flc_sub_categoria.setText("Sub-categoria");
         tc_flc_sub_categoria.setPrefWidth(136.0);
         tc_flc_sub_categoria.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFlcFkSbcCodigo().getSbcDescricao()));
+                     
+        TableColumn<Fluxocaixa, String> tc_flc_is_profit_flow = new TableColumn<>();
+        tc_flc_is_profit_flow.setText("Lucro/Despesa");
+        tc_flc_is_profit_flow.setPrefWidth(100.0);
+        tc_flc_is_profit_flow.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFlcFkCtcCodigo().getCtcPositva() ? "Lucro" : "Despesa"));
 
         TableColumn<Fluxocaixa, Double> tc_flc_valor = new TableColumn<>();
         tc_flc_valor.setText("Valor");
@@ -383,6 +386,7 @@ public class HomeScreenController {
                 tc_flc_forma_pagamento,
                 tc_flc_categoria,
                 tc_flc_sub_categoria,
+                tc_flc_is_profit_flow,
                 tc_flc_valor);
         tableFluxo.setItems(listaFluxos);
 
@@ -410,13 +414,21 @@ public class HomeScreenController {
 
         dpDataFlc.setDisable(clear);
         if (clear) {
-            tfCodFlc.setText("");
-            tfDesFlc.setText("");
-            tfValFlc.setText("");
-            dpDataFlc.setValue(LocalDate.now());
-            cbCtcFlc.getSelectionModel().selectFirst();
-            cbFrmPag.getSelectionModel().selectFirst();
+            clearFields();
         }
+    }
+
+    private void clearFields() {
+        btnEditFluxo.setDisable(true);
+        btnDeleteFluxo.setDisable(true);
+        miEditFluxo.setDisable(true);
+        miDeleteFluxo.setDisable(true);
+        tfCodFlc.setText("");
+        tfDesFlc.setText("");
+        tfValFlc.setText("");
+        dpDataFlc.setValue(LocalDate.now());
+        cbCtcFlc.getSelectionModel().selectFirst();
+        cbFrmPag.getSelectionModel().selectFirst();
     }
 
     private void addListenerForTableFluxo() {

@@ -151,12 +151,14 @@ public class CtcTableController {
     @FXML
     void addCategoria(ActionEvent event) {
         setEdit(false);
+        clearCatFields();
         setupTextFieldsAndButtonsCtc(false);
     }
 
     @FXML
     void addSubCategoria(ActionEvent event) {
         setEdit(false);
+        clearSubFields();
         setupTextFieldsAndButtonsSub(false);
     }
 
@@ -303,14 +305,7 @@ public class CtcTableController {
         assert tfDesSub != null : "fx:id=\"tfDesSub\" was not injected: check your FXML file 'CtcTable.fxml'.";
 
         try {
-            btnEditCategoria.setDisable(true);
-            btnEditSubCategoria.setDisable(true);
-            btnDeleteCategoria.setDisable(true);
-            btnDeleteSubCategoria.setDisable(true);
-            miEditCategoria.setDisable(true);
-            miEditSubCategoria.setDisable(true);
-            miDeleteCategoria.setDisable(true);
-            miDeleteSubCategoria.setDisable(true);
+
             addListenerForTableCategorias();
             addListenerForTableSubCategorias();
             updateTableCategorias();
@@ -404,9 +399,7 @@ public class CtcTableController {
         miSalvar.setDisable(clear);
         miCancelar.setDisable(clear);
         if (clear) {
-            tfCodCat.setText("");
-            tfDesCat.setText("");
-            ckbPosCat.setSelected(false);
+            clearCatFields();
         }
     }
 
@@ -422,10 +415,28 @@ public class CtcTableController {
         miSubSalvar.setDisable(clear);
         miSubCancelar.setDisable(clear);
         if (clear) {
-            tfCodSub.setText("");
-            tfDesSub.setText("");
-            cbCatSub.getSelectionModel().selectFirst();
+            clearSubFields();
         }
+    }
+
+    private void clearSubFields() {
+        btnEditSubCategoria.setDisable(true);
+        btnDeleteSubCategoria.setDisable(true);
+        miEditSubCategoria.setDisable(true);
+        miDeleteSubCategoria.setDisable(true);
+        tfCodSub.setText("");
+        tfDesSub.setText("");
+        cbCatSub.getSelectionModel().selectFirst();
+    }
+
+    private void clearCatFields() {
+        btnEditCategoria.setDisable(true);
+        btnDeleteCategoria.setDisable(true);
+        miEditCategoria.setDisable(true);
+        miDeleteCategoria.setDisable(true);
+        tfCodCat.setText("");
+        tfDesCat.setText("");
+        ckbPosCat.setSelected(false);
     }
 
     public boolean isEdit() {
